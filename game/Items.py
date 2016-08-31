@@ -1,48 +1,5 @@
 import random
-'''
-class weapons:
 
-    weaponry = {"Dagger": {"DMG": 2,"dur": 10} ,"Mace": {"DMG": 2, "dur": 10} ,"Shield": {"DMG": 2, "dur": 10}, "Sword": {"DMG": 2,"dur": 10},"Great Sword": {"DMG": 2, "dur": 10}}
-
-    material = {"Rusty": {"DMG": 2,"dur": 10} ,"Bronze": {"DMG": 2,"dur": 10} ,"Iron": {"DMG": 2,"dur": 10} ,"Silver": {"DMG": 2,"dur": 10} ,"Mythril": {"DMG": 2,"dur": 10} ,"Mysterious alloy": {"DMG": 2,"dur": 10} ,"Dragon scales": {"DMG": 2,"dur": 10}}
-
-#    action = input()
-
-
-
-#weapoon name = [1] weapon dmg = [number[2]] weapon durability = [number[3]]
-
-    #Random Number Generator weaponry
-    def RNG_weaponry(self):
-        higher_value = len(weapons.weaponry) -1
-        print(higher_value)
-        weapon_value =random.randint(0, higher_value)
-        return weapon_value
-
-    #Random Number Generator material
-    def RNG_material(self):
-        higher_value = len(weapons.material) -1
-        material_value =random.randint(0, higher_value)
-        return material_value
-
-    def WeaponDrops():
-        weaponList = []
-
-        list(weapons.weaponry.keys())
-        for key in weapons.weaponry.keys():
-            weaponList.append(key)
-
-        materialList = []
-
-        list(weapons.material.keys())
-        for key in weapons.material.keys():
-            materialList.append(key)
-
-        drop = str(materialList[weapons.RNG_material(weapons)]) + " " + str(weaponList[weapons.RNG_weaponry(weapons)])
-
-        print("you obtained " + drop)
-        return drop
-'''
 '''
 class potions:
     def Type:
@@ -102,7 +59,6 @@ class weapons:
         materialDurability = weapons.material[materialType]["dur"]
         newWeaponDurability = weaponDurability + materialDurability
         return newWeaponDurability
-
 
     def getWeaponDMG(self, weaponType, materialType):
         weaponDMG = weapons.weaponry[weaponType]["DMG"]

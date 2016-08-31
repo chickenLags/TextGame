@@ -30,16 +30,6 @@ def RNG():
     final_value =random.randint(lower_value, higher_value)
     return final_value
 
-#RNG weapons + drops
-def RNG_Items():
-    weapontype = random.randint(0, len(weapon[value]))
-    return final_value
-
-weapon = ["No value", "Rusty Dagger", "Bronze Dagger", "Iron Dagger", "Silver Dagger", "Mythril Dagger", "Mysterious Alloy Dagger", "Dragon Scales Dagger", "Rusty Mace", "Bronze Mace", "Iron Mace", "Silver Mace", "Mythril Mace",
-          "Mysterious Alloy Mace", "Dragon Scales Mace", "Bronze Two Handed Mace", "Iron Two Handed Mace", "Silver Two Handed Mace", "Mysterious Alloy Two Handed Mace", "Dragon Scales Two Handed Mace", "Rusty Shield", "Bronze Shield",
-          "Iron Shield", "Silver Shield", "Mythril Shield", "Mysterious Alloy Shield", "Dragon Scales Shield", "Rusty Sword", "Bronze Sword", "Iron Sword", "Silver Sword", "Mythril Sword", "Mysterious Alloy Sword", "Dragon Scales Sword",
-          "Rusty Great Sword", "Bronze Great Sword", "Iron Great Sword", "Silver Great Sword", "Mythril Great Sword", "Mysterious Alloy Great Sword", "Dragon Scales Great Sword"]
-
 def AddItems():
     Items.InventoryDict.append(RNG_Items())
 
@@ -116,20 +106,26 @@ def choices():
             game = leaving_game()
         elif action == "check stat" or action == "stats" or action == "c":
             displayStats()
-        elif action == "equip" or action == "e":
+            print("do you want to switch weapons? Yes/No")
             switch()
         else:
             print("you can search, check your stats or leave.")
 
 def switch():
-    print("which item do you like to equip?")
-    displayInventory()
-    chosenItem = input("the name of the weapon is case sensitive")
-    if chosenItem in inventoryDict:
-        Items.InventoryDict.append(equipedWeapon)
-        Items.equipedWeapon.append(chosenItem)
-        Items.InventoryDict.remove(chosenItem)
-        print("The "+ equipedWeapon +" is equiqed")
+    game = True
+    while game:
+        action = input("what will you do?\n")
+        if action == "n" or action == "no":
+            choices()
+        elif action == "y" or action == "yes":
+            print("which item do you like to equip?")
+            char.Character.displayInventory(char)
+            chosenItem = input("the name of the weapon is case sensitive\n")
+            if chosenItem in inventoryDict:
+                Items.InventoryDict.append(equipedWeapon)
+                Items.equipedWeapon.append(chosenItem)
+                Items.InventoryDict.remove(chosenItem)
+                print("The "+ equipedWeapon +" is equiqed")
 
 def displayStats():
     print("Current Stats: " + str(char.Character.stats))
