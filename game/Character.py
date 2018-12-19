@@ -1,33 +1,37 @@
 import random
+from Inventory import Inventory
+from Equipment import Equipment
+from Items import itemType
+
 
 
 class Character:
-
-
-
-
-
-    def __init__(self):
+    def __init__(self, itemManager):
         self.stats = {"level": 1,  "title": "Wanderer",  "strength": 1,  "experience": 0, "hp": 20}
-        self.inventory = []
+        self.inventory = Inventory()
+        self.equipment = Equipment(itemManager)
 
-    def equipweapon(self, weapon):
-        self.weapon = weapon
+    def _forceEquip(self, equipment):
+        self.equipment._equipPop(equipment)
+
+    def equip(self, equipmentName):
+        if not self.inventory.canEquip(equipmentName):
+            print ("can't equip this item")
+        else:
+            self.inventory.add( self.equipment._equipPop( self.inventory.popItem( equipmentName ) ) )
+
 
     def getInventoryAsList(self):
-        temp = []
-        for item in self.inventory:
-            temp.append(item.name);
-        return temp
+        return self.inventory.getInventoryAsList()
 
     def getDamage(self):
-        return self.stats['strength'] + self.weapon.getDamage()
+        if self.equipment.weapon:
+            return self.stats['strength'] + self.equipment.weapon.getDamage()
+        return self.stats['strength']
 
     def weaponErosion(self):
-        self.weapon.erode()
-        if self.weapon.durability <= 0:
-            self.weapon = None
-            print("Your weapon makes a 'cling' sound as it breaks, too bad I will have to move on without a weapon")
+        self.equipment.erode(itemType.WEAPON)
+
 
 
     def maxExperience(self):
@@ -64,5 +68,18 @@ class Character:
                 self.stats["experience"] = 0
                 self.stats["level"] += 1
                 self.stats["strength"] += random.randrange(1, 3)
-                self.stats["hp"] = 10 * self.stats["level"]
+                self.stats["hp"] += 10 * self.stats["level"]
                 totalExp = expReceived - expTillNextLevel
+
+    def displayStats(self):
+        print("======= Current Stats =======")
+        for key in self.stats:
+            print(" \t" + key + ": " + str(self.stats[key]))
+
+        print("\n======= Equipment =======")
+        print("\tWeapon:  " + str(self.equipment.getName(itemType.WEAPON)) )
+        print("\tShield:  " + str(self.equipment.getName(itemType.SHIELD)))
+        print("\tHead  :  " + str(self.equipment.getName(itemType.HEAD)))
+        print("\tBody  :  " + str(self.equipment.getName(itemType.BODY)))
+        print("\tHands :  " + str(self.equipment.getName(itemType.HANDS)))
+        print("\tLegs  :  " + str(self.equipment.getName(itemType.LEGS)) + "\n")

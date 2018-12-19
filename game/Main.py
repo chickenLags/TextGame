@@ -3,13 +3,21 @@ from Character import Character
 from Enemy import Enemy
 from Action import Action
 from Location import Location
-from Items import Weapon, Item, ItemManager
+from Items import Weapon, Item, ItemManager, Armour
 
-actions = Action()
+
 location = Location()
-character = Character()
-character.equipweapon(Weapon("Rusty Dagger", "Dagger", "Rusty"))
 itemManager = ItemManager()
+character = Character(itemManager)
+#character._forceEquip( Weapon ( itemManager.getMaterial("Rusty"), itemManager.getWeaponType("Dagger") ) )
+character._forceEquip( Armour ( itemManager.getMaterial("Rusty"), itemManager.getArmourType("Leggings") ) )
+character.inventory.add(itemManager.generateWeapon())
+character.inventory.add(itemManager.generateWeapon())
+
+
+#potato = getattr(character, "displayStats")
+#potato()
+
 
 #Random Number Generator
 def RNG_under_ten(lower_value = 1, higher_value = 10):
@@ -18,16 +26,12 @@ def RNG_under_ten(lower_value = 1, higher_value = 10):
 
 def combat():
     combat = True
-
-# return location
-# send location to monster type
-# return monster type and stats
     enemy = Enemy(location)
     
     print("you encountered a lvl " + str(enemy.level) + " " +str(enemy.name) + "!!")
     while combat:
         action = input('you can attack, run or examine the enemy with scan\n')
-        if action in actions.attack:
+        if action in Action.attack:
             if RNG_under_ten() >= 3: #determines whether i hit the enemy
                 print("you make a swing for it and hit the " + enemy.name + " perfectly on the spot ")
                 print("the " + enemy.name + " makes a painful sound!")
@@ -40,7 +44,7 @@ def combat():
                     combat = False
 
                     if RNG_under_ten() >= 2:
-                        character.inventory.append(itemManager.generateWeapon())
+                        character.inventory.add(itemManager.generateWeapon())
 
                 else:
                     character.damage(enemy.getDamage())
@@ -55,14 +59,14 @@ def combat():
                     print(enemy.getDeathMessage())
                     character.die()
 
-        elif action in actions.run:
+        elif action in Action.run:
             if RNG_under_ten() <= 5:
                 print("you failed to escape from the " + enemy.name)
                 character.damage(enemy.getDamage())
             else:
                 print("As fast as you can you leave the " + enemy.name + " behind...")
                 combat = False
-        elif action in actions.scan:
+        elif action in Action.scan:
             enemy.checkLife()
             character.damage(enemy.getDamage())
         else:
@@ -94,14 +98,15 @@ def choices():
         elif action == "leave" or action == "l":
             game = leaving_game()
         elif action == "check stat" or action == "stats" or action == "c":
-            displayStats()
+            character.displayStats()
         elif action == "check inventory" or action == "inventory" or action == "i" or action == "inv":
             check_inventory()
         else:
             print("you can search, check your stats or leave.")
 
 def getAction(string):
-    command = input(string + "\n =>")
+    command = input(string + "\n => ")
+    print("")
     if command.count(" ") > 0:
         action, argument = command.split(" ", 1)
         return action, argument
@@ -111,29 +116,83 @@ def getAction(string):
 
 def check_inventory():
     in_inventory = True
-    print("You have the following items in your inventory")
-    print(str(character.getInventoryAsList()))
     while in_inventory:
+        print("You have the following items in your inventory:")
+        print(str(character.inventory.getInventoryAsList()))
         action, argument = getAction(" you can leave or equip <item name>.")
-        if action in actions.leave:
+        if action in Action.leave:
             in_inventory = False
-        elif action in actions.equip:
-            if argument in character.getInventoryAsList():
-                character.inventory.append(character.weapon)
-                for item in character.inventory:
-                    if item.name == argument:
-                        character.weapon = character.inventory.pop(character.inventory.index(item))
-                        print("equiped " + character.weapon.name)
+        elif action in Action.equip:
+            character.equip(argument)
+
+        else:
+            print("I have no such item in my inventory...")
+
+# spacing after typing.
+#
+# on entry text
+# in loop text
+#
+# actions allowed + argument allowed +  text connected to action + consequences()
+#
+# else text
+
+def gameEntry():
+    while Playing:
+        instance.entryMessages()
+        while instance.running:
+            instance.loopEntryMessages()
+            action, argument = getAction(instance.inputMessage())
+            if instance.options.containsAction(action):
+                option.actionEntryMessage()     ##
+                option.actions()          ##
+                option.actionEndMessage()       ##
+                instance.loopEndMessages()
             else:
-                print("I have no such item in my inventory...")
+                instance.elseMessages()
 
 
-def displayStats():
-    print("======= Current Stats =======")
-    for key in character.stats:
-        print(" \t" + key + ": \t" + str(character.stats[key]) )
-    print("======= Current weapon =======")
-    print("\t" + str(character.weapon.name))
+class Option:
+    def __init__(self, actions):
+        self.actions = actions
+
+    def containsAction(self, action, argument):
+        for option in self.actions:
+            if action in option.synonims:
+                return option
+
+
+class Instance:
+    def __init__(self, entryMessages, loopEntryMessages, inputMessage, options, loopEndMessages, elseMessages):
+        self.entryMessages = entryMessages
+        self.loopEntryMessages = loopEntryMessages
+        self.inputMessage = inputMessage
+        self.options = options
+        self.loopEndMessages = loopEndMessages
+        self.elseMessages = elseMessages
+        self.running = True
+
+    def entryMessages(self):
+        for message in self.entryMessages:
+            print(message)
+
+    def loopEntryMessages(self):
+        for message in self.loopEntryMessages:
+            print(message)
+
+    def inputMessage(self):
+        return self.inputMessage
+
+
+    def loopEndMessages(self):
+        for message in self.loopEndMessages():
+            print(message)
+
+    def loopElseMessages(self):
+        for message in self.loopElseMessages():
+            print(message)
+
+
 
 
 
@@ -148,7 +207,17 @@ choices()
 '''
     DONE: weapons made and default equip created. 
     DONE: can change the equip.
-    prevent items from being equiped
+    DONE: prevent items from being equiped
+    DONE: reworked the items, material, and equipType to make it OOP
+    DONE: fixed combat with no weapons.
+    DONE: fix damage and other functions
+    DONE: fix displayname for nonetype equipment
+    DONE: fix pop of nonexsistent equipment
+    rework statemachine => SEEMS IMPLEMENTED, SHOULD TRY IT WITH COMBAT CLASS...
+    make actions easily visible
+    fix defences for the player
+    fix defences for the enemy
+    create a combat situation ~> multiple enemies and more interesting dynamics 
     make save game
     determine areas
     determine random events

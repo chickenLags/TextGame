@@ -1,4 +1,5 @@
 import random
+from enum import Enum
 
 '''
 class potions:
@@ -6,88 +7,159 @@ class potions:
 '''
 import random
 
+class itemType(Enum):
+    WEAPON  = 1
+    SHIELD  = 2
+    HANDS   = 3
+    LEGS    = 4
+    BODY    = 5
+    HEAD    = 6
+    OFFHAND = 7
+
+class Material:
+
+    def __init__(self, name, DMG, DEF, DUR):
+        self.name = name
+        self.damage = DMG
+        self.defence = DEF
+        self.durability = DUR
+
+class EquipType:
+
+    def __init__(self, name, itemType, DEFDMG, dur):
+        self.name = name
+        self.itemType = itemType
+        self.defDmg = DEFDMG
+        self.durability = dur
+
+
 class ItemManager:
-
-    weaponry = {"Dagger": {"DMG": 1,"dur": 5},
-                "Mace": {"DMG": 3, "dur": 7} ,
-                "Shield": {"DMG": 0, "dur": 10},
-                "Sword": {"DMG": 5,"dur": 5},
-                "Great Sword": {"DMG": 7, "dur": 3}}
-
-    material = {"Rusty": {"DMG": 1,"dur": 1} ,
-                "Bronze": {"DMG": 1,"dur": 2} ,
-                "Iron": {"DMG": 3,"dur": 3} ,
-                "Silver": {"DMG": 5,"dur": 1} ,
-                "Mythril": {"DMG": 3,"dur": 3} ,
-                "Mysterious alloy": {"DMG": 5,"dur": 2},
-                "Dragon scales": {"DMG": 4,"dur": 4}}
+    weaponTypes         = []
+    shieldTypes         = []
+    armourTypes         = []
+    armourMaterials     = []
+    materials           = []
 
     def __init__(self):
-        pass
+        self.materials.append(Material("Rusty",            DMG=1, DEF=2, DUR=2))
+        self.materials.append(Material("Bronze",           DMG=1, DEF=2, DUR=2 ))
+        self.materials.append(Material("Iron",             DMG=3, DEF=4, DUR=3 ))
+        self.materials.append(Material("Silver",           DMG=5, DEF=2, DUR=1 ))
+        self.materials.append(Material("Mythril",          DMG=3, DEF=5, DUR=3 ))
+        self.materials.append(Material("Mysterious alloy", DMG=5, DEF=6, DUR=2 ))
+        self.materials.append(Material("Dragon scales",    DMG=4, DEF=7, DUR=4 ))
 
+        self.armourMaterials.append(Material("Leather",    DMG=0, DEF=1, DUR=15))
 
+        self.armourTypes.append(EquipType("Gauntlets", itemType.HANDS, DEFDMG=1, dur=5))
+        self.armourTypes.append(EquipType("Leggings", itemType.LEGS, DEFDMG=3, dur=7))
+        self.armourTypes.append(EquipType("Armour", itemType.BODY, DEFDMG=5, dur=5))
+        self.armourTypes.append(EquipType("Helmet", itemType.HEAD, DEFDMG=7, dur=3))
 
-    def getWeaponType(self):
-        weaponList = []
-        list(self.weaponry.keys())
-        for key in self.weaponry.keys():
-            weaponList.append(key)
+        self.shieldTypes.append(EquipType("Shield", itemType.SHIELD, DEFDMG=1, dur=10))
 
-        weaponType = str(weaponList[random.randint(0, len(self.weaponry) - 1)])
-        return weaponType
+        self.weaponTypes.append(EquipType("Dagger", itemType.WEAPON, DEFDMG=1, dur=5))
+        self.weaponTypes.append(EquipType("Mace", itemType.WEAPON, DEFDMG=3, dur=7))
+        self.weaponTypes.append(EquipType("Sword", itemType.WEAPON, DEFDMG=5, dur=5))
+        self.weaponTypes.append(EquipType("Great Sword", itemType.WEAPON, DEFDMG=7, dur=3))
 
-    def getMaterialType(self):
+    def getMaterial(self, materialName):
+        for mat in self.materials:
+            if mat.name == materialName:
+                return mat
+        for mat in self.armourMaterials:
+            if mat.name == materialName:
+                return mat
+        return False
+
+    def getWeaponType(self, weaponTypeName):
+        for weaponType in self.weaponTypes:
+            if weaponType.name == weaponTypeName:
+                return weaponType
+        return False
+
+    def getArmourType(self, armourTypeName):
+        for armourType in self.armourTypes:
+            if armourType.name == armourTypeName:
+                return armourType
+        return False
+
+    def getShieldType(self, shieldTypeName):
+        for shieldType in self.shieldTypes:
+            if shieldType.name == shieldTypeName:
+                return shieldType
+        return False
+
+    def _generateMaterial(self, defensive = False):
         materialList = []
-        list(self.material.keys())
-        for key in self.material.keys():
-            materialList.append(key)
+        for mat in self.materials:
+            materialList.append(mat)
+        if defensive:
+            for mat in self.armourMaterials:
+                materialList.append(mat)
+        return materialList[random.randint(0, len(materialList) - 1)]
 
-        weaponMaterial = str(materialList[random.randint(0, len(self.material) - 1 )])
-        return weaponMaterial
+    def _generateWeaponType(self):
+        return self.weaponTypes[random.randint(0, len(self.weaponTypes) - 1)]
 
-    def getWeaponName(self, weaponType, materialType):
-        newWeaponName = str(materialType) + " " + str(weaponType)
-        return newWeaponName
+    def _getShieldType(self):
+        return self.shieldTypes[random.randint(0, len(self.shieldTypes) - 1)]
+
+    def _generateArmour(self):
+        return self.armourTypes[random.randint(0, len(self.armourTypes) - 1)]
 
     def generateWeapon(self):
-        weaponType = self.getWeaponType()
-        materialType = self.getMaterialType()
-        newWeaponName = materialType + weaponType
-
-        drop = Weapon(newWeaponName, weaponType, materialType)
-        print("you obtained " + drop.name)
+        weaponType = self._generateWeaponType()
+        material = self._generateMaterial()
+        drop = Weapon(material, weaponType)
+        print("you obtained " + drop.name + "!")
         return drop
+
+    def generateShield(self):
+        shieldType = self._getShieldType()
+        material = self._generateMaterial(True)
+        drop = Shield(material, shieldType)
+        print("You obtained a " + drop.name + "!")
+        return shield
+
+    def generateArmour(self):
+        armourType = self._generateArmour()
+        material = self._generateMaterial(True)
+        drop = Armour(material, armourType)
+        print("You obtained a " + drop.name + "!")
 
 
 
 class Item:
-
     def __init__(self, name):
-        self.name = name;
+        pass
 
-class Weapon(Item):
-    weaponry = {"Dagger": {"DMG": 1, "dur": 5},     "Mace": {"DMG": 3, "dur": 7},
-                "Shield": {"DMG": 0, "dur": 10},    "Sword": {"DMG": 5, "dur": 5},
-                "Great Sword": {"DMG": 7, "dur": 3}}
+class Equipable(Item):
+    def __init__(self, material, equipType):
+        self.name = material.name + " " + equipType.name.lower()
+        self.material = material
+        self.equipType = equipType
+        self.durability = self.material.durability + self.equipType.durability
 
-    material = {"Rusty": {"DMG": 1, "dur": 1},      "Bronze": {"DMG": 1, "dur": 2},
-                "Iron": {"DMG": 3, "dur": 3},       "Silver": {"DMG": 5, "dur": 1},
-                "Mythril": {"DMG": 3, "dur": 3},    "Mysterious alloy": {"DMG": 5, "dur": 2},
-                "Dragon scales": {"DMG": 4, "dur": 4}}
+class DefensiveGear(Equipable):
+    def getDefence(self):
+        return self.material.defence + self.equipType.defDmg
 
-    def __init__(self, name, weaponType, materialType):
-        self.name = name
-        self.weaponType = weaponType
-        self.materialType = materialType
+class Armour(DefensiveGear):
+    def __init__(self, material, equipType):
+        super(Armour, self).__init__(material, equipType)
 
-            # determine durability
-        self.durability = self.material[self.materialType]["dur"] + self.weaponry[self.weaponType]['dur']
+class Shield(DefensiveGear):
+    def __init__(self, material, equipType):
+        super(Shield, self).__init__(material, equipType)
 
+class Weapon(Equipable):
+    def __init__(self, material, equipType):
+        super(Weapon, self).__init__(material, equipType)
 
     def getDamage(self):
-        weaponDMG = self.weaponry[self.weaponType]["DMG"]
-        materialDMG = self.material[self.materialType]["DMG"]
-        return weaponDMG + materialDMG
+        return self.equipType.defDmg + self.material.damage
 
     def erode(self):
         self.durability -= 1;
+
