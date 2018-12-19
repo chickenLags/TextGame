@@ -6,81 +6,88 @@ class potions:
 '''
 import random
 
-class weapons:
+class ItemManager:
 
-    weaponry = {"Dagger": {"DMG": 1,"dur": 5} ,"Mace": {"DMG": 3, "dur": 7} ,"Shield": {"DMG": 0, "dur": 10}, "Sword": {"DMG": 5,"dur": 5},"Great Sword": {"DMG": 7, "dur": 3}}
+    weaponry = {"Dagger": {"DMG": 1,"dur": 5},
+                "Mace": {"DMG": 3, "dur": 7} ,
+                "Shield": {"DMG": 0, "dur": 10},
+                "Sword": {"DMG": 5,"dur": 5},
+                "Great Sword": {"DMG": 7, "dur": 3}}
 
-    material = {"Rusty": {"DMG": 1,"dur": 1} ,"Bronze": {"DMG": 1,"dur": 2} ,"Iron": {"DMG": 3,"dur": 3} ,"Silver": {"DMG": 5,"dur": 1} ,"Mythril": {"DMG": 3,"dur": 3} ,"Mysterious alloy": {"DMG": 5,"dur": 2} ,"Dragon scales": {"DMG": 4,"dur": 4}}
+    material = {"Rusty": {"DMG": 1,"dur": 1} ,
+                "Bronze": {"DMG": 1,"dur": 2} ,
+                "Iron": {"DMG": 3,"dur": 3} ,
+                "Silver": {"DMG": 5,"dur": 1} ,
+                "Mythril": {"DMG": 3,"dur": 3} ,
+                "Mysterious alloy": {"DMG": 5,"dur": 2},
+                "Dragon scales": {"DMG": 4,"dur": 4}}
 
-#    action = input()
+    def __init__(self):
+        pass
 
-
-
-#weapoon name = [1] weapon dmg = [number[2]] weapon durability = [number[3]]
-
-    #Random Number Generator weaponry
-    def RNG_weaponry(self):
-        higher_value = len(weapons.weaponry) -1
-        print(higher_value)
-        weapon_value =random.randint(0, higher_value)
-        return weapon_value
-
-    #Random Number Generator material
-    def RNG_material(self):
-        higher_value = len(weapons.material) -1
-        material_value =random.randint(0, higher_value)
-        return material_value
 
 
     def getWeaponType(self):
         weaponList = []
-        list(weapons.weaponry.keys())
-        for key in weapons.weaponry.keys():
+        list(self.weaponry.keys())
+        for key in self.weaponry.keys():
             weaponList.append(key)
 
-        weaponType = str(weaponList[weapons.RNG_weaponry(weapons)])
+        weaponType = str(weaponList[random.randint(0, len(self.weaponry) - 1)])
         return weaponType
 
     def getMaterialType(self):
         materialList = []
-
-        list(weapons.material.keys())
-        for key in weapons.material.keys():
+        list(self.material.keys())
+        for key in self.material.keys():
             materialList.append(key)
-        weaponmaterial = str(materialList[weapons.RNG_material(weapons)])
-        return weaponmaterial
+
+        weaponMaterial = str(materialList[random.randint(0, len(self.material) - 1 )])
+        return weaponMaterial
 
     def getWeaponName(self, weaponType, materialType):
         newWeaponName = str(materialType) + " " + str(weaponType)
         return newWeaponName
 
-    def getWeaponDurability(self, weaponType, materialType):
-        weaponDurability = weapons.weaponry[weaponType]["dur"]
-        materialDurability = weapons.material[materialType]["dur"]
-        newWeaponDurability = weaponDurability + materialDurability
-        return newWeaponDurability
+    def generateWeapon(self):
+        weaponType = self.getWeaponType()
+        materialType = self.getMaterialType()
+        newWeaponName = materialType + weaponType
 
-    def getWeaponDMG(self, weaponType, materialType):
-        weaponDMG = weapons.weaponry[weaponType]["DMG"]
-        materialDMG = weapons.material[materialType]["DMG"]
-        newWeaponDMG = weaponDMG + materialDMG
-        return newWeaponDMG
-
-    def WeaponDrops(self):
-        # wapen return in vorm van {"Rusty Dagger": [DMG, current durability, max durability]}
-        # eerst moeten we de weapontype claimen en de materialtype
-        weaponType = weapons.getWeaponType(weapons)
-        materialType = weapons.getMaterialType(weapons)
-
-        #nu moeten we beide Type's hebben om de gegevends van het nieuwe wapen te krijgen
-        newWeaponName = weapons.getWeaponName(weapons, weaponType, materialType)
-        newWeaponDurability = weapons.getWeaponDurability(weapons, weaponType, materialType)
-        newWeaponDMG = weapons.getWeaponDMG(weapons, weaponType, materialType)
-
-        drop = [newWeaponName, newWeaponDMG, newWeaponDurability, newWeaponDurability]
-
-
-
-
-        print("you obtained " + drop[0])
+        drop = Weapon(newWeaponName, weaponType, materialType)
+        print("you obtained " + drop.name)
         return drop
+
+
+
+class Item:
+
+    def __init__(self, name):
+        self.name = name;
+
+class Weapon(Item):
+    weaponry = {"Dagger": {"DMG": 1, "dur": 5},     "Mace": {"DMG": 3, "dur": 7},
+                "Shield": {"DMG": 0, "dur": 10},    "Sword": {"DMG": 5, "dur": 5},
+                "Great Sword": {"DMG": 7, "dur": 3}}
+
+    material = {"Rusty": {"DMG": 1, "dur": 1},      "Bronze": {"DMG": 1, "dur": 2},
+                "Iron": {"DMG": 3, "dur": 3},       "Silver": {"DMG": 5, "dur": 1},
+                "Mythril": {"DMG": 3, "dur": 3},    "Mysterious alloy": {"DMG": 5, "dur": 2},
+                "Dragon scales": {"DMG": 4, "dur": 4}}
+
+    def __init__(self, name, weaponType, materialType):
+        self.name = name
+        self.weaponType = weaponType
+        self.materialType = materialType
+
+            # determine durability
+        self.durability = self.material[self.materialType]["dur"] + self.weaponry[self.weaponType]['dur']
+
+
+    def getDamage(self):
+        weaponDMG = self.weaponry[self.weaponType]["DMG"]
+        materialDMG = self.material[self.materialType]["DMG"]
+        return weaponDMG + materialDMG
+
+    def erode(self):
+        self.durability -= 1;

@@ -1,84 +1,73 @@
 import random
-import Items as item
-import Character as char
-import Enemy as mob
+from Character import Character
+from Enemy import Enemy
+from Action import Action
+from Location import Location
+from Items import Weapon, Item, ItemManager
 
-
-
-class Location:
-    location = "Dark Forest"
-
-    # properties of location:
-    # name, what monsters, level range
-    # option for future additions.
-
-    locationProperties = {"Default":
-                              {"monstertypes":["Goblins", "Ogres", "Dragons"],
-                               "levelRange": [1, 100]},
-                          "Forest":
-                              {"monstertypes": ["Goblins"],
-                               "levelRange": [10, 20]},
-                          "Dark Forest":
-                              {"monstertypes": ["Goblins"],
-                               "levelRange": [1, 2]}
-                          }
+actions = Action()
+location = Location()
+character = Character()
+character.equipweapon(Weapon("Rusty Dagger", "Dagger", "Rusty"))
+itemManager = ItemManager()
 
 #Random Number Generator
-def RNG():
-    higher_value = 10
-    lower_value = 1
-    final_value =random.randint(lower_value, higher_value)
-    return final_value
+def RNG_under_ten(lower_value = 1, higher_value = 10):
+    return random.randint(lower_value, higher_value)
 
-def AddItems():
-    Items.InventoryDict.append(RNG_Items())
 
-def RemoveItems():
-    Items.InventoryDict.remove()
-
-def combat(enemy1):
+def combat():
     combat = True
 
 # return location
 # send location to monster type
 # return monster type and stats
-
-
-    mob.Enemy.monsterType(enemy1, Location)
-    monster = enemy1.monster
-    level = mob.monsterLevel
-    print("you encountered a lvl " + str(level) + " " +str(monster ) + "!!")
+    enemy = Enemy(location)
+    
+    print("you encountered a lvl " + str(enemy.level) + " " +str(enemy.name) + "!!")
     while combat:
         action = input('you can attack, run or examine the enemy with scan\n')
-        if action == "attack" or action == "a":
-            if RNG() >= 3:
-                mob.Enemy.attack(enemy1)
-                if mob.Enemy.isDeath(enemy1):
-                    print("The " + monster + " falls down and makes it last wail before it dies")
-                    char.Character.experience_gain(char, enemy1)
+        if action in actions.attack:
+            if RNG_under_ten() >= 3: #determines whether i hit the enemy
+                print("you make a swing for it and hit the " + enemy.name + " perfectly on the spot ")
+                print("the " + enemy.name + " makes a painful sound!")
+                enemy.damage(character.getDamage())
+                character.weaponErosion()
+
+                if enemy.isDead():
+                    print("The " + enemy.name + " falls down and makes it last wail before it dies")
+                    character.experience_gain(enemy.getExperience())
                     combat = False
-                    if RNG() >= 2:
-                        char.Character.inventoryDict.append(item.weapons.WeaponDrops(item.weapons))
-#                        char.Character.inventoryDict.append(item.weapons.WeaponDrops())
+
+                    if RNG_under_ten() >= 2:
+                        character.inventory.append(itemManager.generateWeapon())
 
                 else:
-                    char.Character.counter(char, enemy1)
+                    character.damage(enemy.getDamage())
+                    if not character.isAlive():
+                        print(enemy.getDeathMessage())
+                        character.die()
+
             else:
-                print("The " + monster + " avoided the hit")
-                char.Character.counter(char, enemy1)
-        elif action == "run" or action == "r":
-            if RNG() <= 5:
-                print("you failed to escape from the " + monster)
-                char.Character.counter(char, enemy1)
+                print("The " + enemy.name + " avoided the hit")
+                character.damage(enemy.getDamage())
+                if not character.isAlive():
+                    print(enemy.getDeathMessage())
+                    character.die()
+
+        elif action in actions.run:
+            if RNG_under_ten() <= 5:
+                print("you failed to escape from the " + enemy.name)
+                character.damage(enemy.getDamage())
             else:
-                print("As fast as you can you leave the " + monster + " behind...")
+                print("As fast as you can you leave the " + enemy.name + " behind...")
                 combat = False
-        elif action == "scan" or action == "s":
-            mob.Enemy.checkLife(enemy1)
-            char.Character.counter(char, enemy1)
+        elif action in actions.scan:
+            enemy.checkLife()
+            character.damage(enemy.getDamage())
         else:
             print("You made a typo, you're brain freezes from embarrassment")
-            char.Character.counter(char, enemy1)
+            character.damage(enemy.getDamage())
 
 def leaving_game():
     game_choice = input("Do you wish to leave the forrest behind and live a safe life from now on? (Yes/No)\n")
@@ -99,42 +88,54 @@ def choices():
     print("You see nothing of interest around.")
     game = True
     while game:
-        action = input("what will you do?\n")
+        action = input("what will you do in " + location.name + "?\n")
         if action == "search" or action == "s":
-            combat(mob)
+            combat()
         elif action == "leave" or action == "l":
             game = leaving_game()
         elif action == "check stat" or action == "stats" or action == "c":
             displayStats()
-            print("do you want to switch weapons? Yes/No")
-            switch()
+        elif action == "check inventory" or action == "inventory" or action == "i" or action == "inv":
+            check_inventory()
         else:
             print("you can search, check your stats or leave.")
 
-def switch():
-    game = True
-    while game:
-        action = input("what will you do?\n")
-        if action == "n" or action == "no":
-            choices()
-        elif action == "y" or action == "yes":
-            print("which item do you like to equip?")
-            char.Character.displayInventory(char)
-            chosenItem = input("the name of the weapon is case sensitive\n")
-            if chosenItem in inventoryDict:
-                Items.InventoryDict.append(equipedWeapon)
-                Items.equipedWeapon.append(chosenItem)
-                Items.InventoryDict.remove(chosenItem)
-                print("The "+ equipedWeapon +" is equiqed")
+def getAction(string):
+    command = input(string + "\n =>")
+    if command.count(" ") > 0:
+        action, argument = command.split(" ", 1)
+        return action, argument
+
+    else:
+        return command, ""
+
+def check_inventory():
+    in_inventory = True
+    print("You have the following items in your inventory")
+    print(str(character.getInventoryAsList()))
+    while in_inventory:
+        action, argument = getAction(" you can leave or equip <item name>.")
+        if action in actions.leave:
+            in_inventory = False
+        elif action in actions.equip:
+            if argument in character.getInventoryAsList():
+                character.inventory.append(character.weapon)
+                for item in character.inventory:
+                    if item.name == argument:
+                        character.weapon = character.inventory.pop(character.inventory.index(item))
+                        print("equiped " + character.weapon.name)
+            else:
+                print("I have no such item in my inventory...")
+
 
 def displayStats():
-    print("Current Stats: " + str(char.Character.stats))
-    print("Current weapon: " + str(char.Character.equipedWeapon[0]))
-    char.Character.displayInventory(char.Character)
+    print("======= Current Stats =======")
+    for key in character.stats:
+        print(" \t" + key + ": \t" + str(character.stats[key]) )
+    print("======= Current weapon =======")
+    print("\t" + str(character.weapon.name))
 
 
-#def displayInventory():
- #    print("Inventory: " + str(char.Character.inventoryDict))
 
 
 print("You are in a dark forest")
@@ -145,13 +146,16 @@ choices()
 
 #if i want to make a save game, i can do so here.
 '''
-weapons made and default equip created. cant change the equip yet.
-determine areas
-determine random events
-determine items
-determine npc's
-make AI!!!
-make the monsters fit the levels better.
-be able to determine the rarity of monsters.
+    DONE: weapons made and default equip created. 
+    DONE: can change the equip.
+    prevent items from being equiped
+    make save game
+    determine areas
+    determine random events
+    determine items
+    determine npc's
+    make AI!!!
+    make the monsters fit the levels better.
+    be able to determine the rarity of monsters.
 
 '''
