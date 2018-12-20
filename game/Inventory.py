@@ -1,15 +1,22 @@
 from Items import Equipable, Item
+from Action import Action
 
 class Inventory:
 
     def __init__(self):
-        self.inventory = []
+        self.inventory          = []
 
     def getInventoryAsList(self):
         temp = []
         for item in self.inventory:
             temp.append(item.name);
         return temp
+
+    def displayInventoryAsList(self):
+        temp = []
+        for item in self.inventory:
+            temp.append(item.name);
+        print(temp)
 
     def canEquip(self, itemName):
         for item in self.inventory:

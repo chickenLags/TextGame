@@ -1,3 +1,5 @@
+from Action import Action
+
 class Location:
     name = "Dark Forest"
 
@@ -22,3 +24,20 @@ class Location:
 
     def getLevelRange(self):
         return self.properties[self.name]["levelRange"]
+
+
+
+class locationInventory:
+    def __init__(self, instance, character):
+        self.entryMessages = []
+        self.loopEntryMessages = ["You have the following items in your inventory:",
+                                  character.inventory.getInventoryAsList]
+        self.inputMessage = "You can leave or equip <item name>."
+        self.actions = [Action("leave", Action.leave, [],
+                               [instance.leaveGame ],
+                               ["You left your inventory."]),
+                        Action("equip", Action.equip, [],
+                               [character.equip],
+                               [])]
+        self.loopEndMessages = []
+        self.elseMessages = []

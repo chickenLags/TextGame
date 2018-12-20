@@ -1,8 +1,8 @@
 import random
 from Character import Character
 from Enemy import Enemy
-from Action import Action
-from Location import Location
+from Action import Action, Instance
+from Location import *
 from Items import Weapon, Item, ItemManager, Armour
 
 
@@ -119,7 +119,7 @@ def check_inventory():
     while in_inventory:
         print("You have the following items in your inventory:")
         print(str(character.inventory.getInventoryAsList()))
-        action, argument = getAction(" you can leave or equip <item name>.")
+        action, argument = getAction("You can leave or equip <item name>.")
         if action in Action.leave:
             in_inventory = False
         elif action in Action.equip:
@@ -138,69 +138,32 @@ def check_inventory():
 # else text
 
 def gameEntry():
-    while Playing:
-        instance.entryMessages()
+    while instance.playing:
+        instance.printMessages(instance.entryMessages)
         while instance.running:
-            instance.loopEntryMessages()
-            action, argument = getAction(instance.inputMessage())
-            if instance.options.containsAction(action):
-                option.actionEntryMessage()     ##
-                option.actions()          ##
-                option.actionEndMessage()       ##
-                instance.loopEndMessages()
+            instance.printMessages(instance.loopEntryMessages)
+            action, argument = getAction(instance.inputMessage)
+            if instance.containsAction(action):
+                instance.printMessages( instance.containsAction(action).entryMessages )
+                instance.containsAction(action).compute(argument)
+                instance.printMessages(instance.containsAction(action).endMessages)
+                instance.printMessages( instance.loopEndMessages )
             else:
-                instance.elseMessages()
-
-
-class Option:
-    def __init__(self, actions):
-        self.actions = actions
-
-    def containsAction(self, action, argument):
-        for option in self.actions:
-            if action in option.synonims:
-                return option
-
-
-class Instance:
-    def __init__(self, entryMessages, loopEntryMessages, inputMessage, options, loopEndMessages, elseMessages):
-        self.entryMessages = entryMessages
-        self.loopEntryMessages = loopEntryMessages
-        self.inputMessage = inputMessage
-        self.options = options
-        self.loopEndMessages = loopEndMessages
-        self.elseMessages = elseMessages
-        self.running = True
-
-    def entryMessages(self):
-        for message in self.entryMessages:
-            print(message)
-
-    def loopEntryMessages(self):
-        for message in self.loopEntryMessages:
-            print(message)
-
-    def inputMessage(self):
-        return self.inputMessage
-
-
-    def loopEndMessages(self):
-        for message in self.loopEndMessages():
-            print(message)
-
-    def loopElseMessages(self):
-        for message in self.loopElseMessages():
-            print(message)
+                instance.printMessages( instance.elseMessages )
 
 
 
 
+
+playing = True
+instance = Instance()
 
 
 print("You are in a dark forest")
 print("your actions are attack and run unless you are told otherwise")
-
-choices()
+instance.gotoInstance(locationInventory(instance, character))
+gameEntry()
+#choices()
 
 
 #if i want to make a save game, i can do so here.
