@@ -12,7 +12,7 @@ class Equipment:
         self.legs       = None
         self.hands      = None
 
-    def _equipPop(self, equipment):
+    def _equipPop(self, equipment, silent=False):
         dequiped = None
         if equipment.equipType.itemType == itemType.WEAPON:
             dequiped = self.weapon
@@ -35,28 +35,42 @@ class Equipment:
         else:
             print("Item to be equiped does not fit any slot. name: " + equipment.name)
             return equipment
-        print("Equiped the " + equipment.name.lower() + "!")
-        #print("dequiped is: " + dequiped)
+        if not silent:
+            print("Equiped the " + equipment.name.lower() + "!")
         return dequiped
 
     def erode(self, itemType):
         if itemType == itemType.WEAPON and self.weapon:
-            self.weapon = None
+            self.weapon.durability -= 1
+            if self.weapon.durability <=0:
+                self.weapon = None
         elif itemType == itemType.SHIELD and self.shield:
-            self.shield = None
+            self.shield.durability -= 1
+            if self.shield.durability <= 0:
+                self.shield = None
         elif itemType == itemType.HEAD and self.head:
-            self.head = None
+            self.head.durability -= 1
+            if self.head.durability <= 0:
+                self.head = None
         elif itemType == itemType.BODY and self.body:
-            self.body = None
+            self.body.durability -= 1
+            if self.body.durability <= 0:
+                self.body = None
         elif itemType == itemType.LEGS and self.legs:
-            self.legs = None
+            self.legs.durability -= 1
+            if self.legs.durability <= 0:
+                self.legs = None
         elif itemType == itemType.HANDS and self.hands:
-            self.hands = None
+            self.hands.durability -= 1
+            if self.hands.durability <= 0:
+                self.hands = None
 
     def getName(self, itemType):
         if itemType == itemType.WEAPON:
             if self.weapon:
                 return self.weapon.name
+            else:
+                return "Fist"
         elif itemType == itemType.SHIELD:
             if self.shield:
                 return self.shield.name
@@ -72,8 +86,8 @@ class Equipment:
         elif itemType == itemType.HANDS:
             if self.hands:
                 return self.hands.name
-        else:
-            return "None"
+
+        return "None"
 
 class EmptySlot:
     name = "None"

@@ -1,5 +1,4 @@
-from Items import Equipable, Item
-from Action import Action
+from Items import Item, Equipable
 
 class Inventory:
 
@@ -26,9 +25,8 @@ class Inventory:
 
     def add(self, item):
         if isinstance(item, Item):
-            print("item is indeed instance of Item: " + item.name)
             self.inventory.append(item)
-            print("Put the " + item.name.lower() + " in inventory.")
+            print("Put the " + item.name.lower() + " in the inventory.")
 
     def popItem(self, itemName):
         value = None

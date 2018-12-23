@@ -11,8 +11,8 @@ class Character:
         self.inventory = Inventory()
         self.equipment = Equipment(itemManager)
 
-    def _forceEquip(self, equipment):
-        self.equipment._equipPop(equipment)
+    def _forceEquip(self, equipment, silent=False):
+        self.equipment._equipPop(equipment, silent)
 
     def equip(self, equipmentName):
         if not self.inventory.canEquip(equipmentName):
@@ -39,8 +39,11 @@ class Character:
         expTillNextLevel = tempExpCap * tempExpCap + 20
         return expTillNextLevel
 
-    def damage(self, damage):
-        self.stats["hp"] -= damage
+    def attack(self, enemy):
+        self.stats["hp"] -= enemy.getDamage()
+        if not self.isAlive():
+            print(enemy.getDeathMessage())
+            self.die()
 
     def isAlive(self):
         if self.stats["hp"] <= 0:
@@ -61,7 +64,7 @@ class Character:
             expTillNextLevel = self.maxExperience()
             if totalExp < expTillNextLevel:
                 self.stats["experience"] += expReceived
-                print("You chalk it up to experience ( " + str(expReceived) + " EXP obtained)")
+                print("(" + str(expReceived) + " EXP obtained)")
                 expLeft = False
             else:
                 print("You feel stronger, what a great feeling! And you feel completely Restored!!")
