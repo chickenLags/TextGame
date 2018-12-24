@@ -75,7 +75,9 @@ instance.gotoInstance(LocationForest(instance, character, Action))
 gameEntry()
 
 
-'''
+
+def Done():
+    '''
     DONE: weapons made and default equip created. 
     DONE: can change the equip.
     DONE: prevent items from being equiped
@@ -97,7 +99,11 @@ gameEntry()
     DONE: add connected areas and allow for easy movement in between 
     DONE: examine location
     DONE: gotoHorizontalLocation?
-    
+    '''
+
+def Todo():
+
+    '''
     add easy alternative selection for list options (inventory, locations(gocommande), etc)
     rework enemy creation
     rework battle functions
@@ -114,9 +120,11 @@ gameEntry()
     SUSPENDED-UNNESSARY: add a method to make use of chance
     examine weapon - > stats should be its own location.
     add "examine" for items in inventory
+    add movement of monsters or npcs between locations.
+
     
     add visual interface
-    
+
     add story?
     add save game functionality
     add random events

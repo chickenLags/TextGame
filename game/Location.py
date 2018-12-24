@@ -82,21 +82,19 @@ class LocationCombatInstance(LocationBase):
         self.entryMessages.append("You encountered a lvl." + str(self.enemy.level) + " " + str(self.enemy.name) + ".")
         self.inputMessage = 'you can attack, run or examine the enemy with scan\n'
 
-            # add attack with eitherOption
-        #self.actions.append( LocationBase.Action("Attack", LocationBase.Action.attack, [], [self.attemptAttack], []) )
+        self.name = "combat"
+
+
         attackLambda = lambda : self.enemy.attack(self.character, self.instance)
         self.actions.append( LocationBase.Action("Attack", LocationBase.Action.attack, [], [attackLambda], []))
-
         self.actions.append( LocationBase.Action("Run", LocationBase.Action.run, [], [self.run], []) )
-        getAttacked = lambda : self.character.attack(self.enemy)
-        self.actions.append( LocationBase.Action("Examine", LocationBase.Action.examine, [], [self.enemy.checkLife, getAttacked], []) )
+        self.actions.append( LocationBase.Action("Examine", LocationBase.Action.examine, [], [self.enemy.checkLife], []) )
 
-        self.name = "combat"
 
     def run(self):
         if RNG_under_ten() <= 5:
             print("you failed to escape from the " + self.enemy.name)
-            self.character.damage(self.enemy.getDamage())
+            self.character.attack(self.enemy.getDamage())
         else:
             print("As fast as you can you leave the " + self.enemy.name + " behind...")
             self.instance.leaveInstance()
@@ -121,8 +119,9 @@ class TopLevelLocation(LocationBase):
 
 class LocationForest(TopLevelLocation):
     synonims = ["forest", "f"]
-    def __init__(self, instance, character, Action):
-        LocationBase.Action = Action
+    def __init__(self, instance, character, Action=False):
+        if Action:
+            LocationBase.Action = Action
         LocationBase.character = character
         super(LocationForest, self).__init__(instance, character)
 
@@ -137,9 +136,8 @@ class LocationForest(TopLevelLocation):
         self.entryMessages.append("You see nothing of interest around.")
         self.inputMessage = "what will you do in the " + self.name + "?"
         gotoCombat = lambda: instance.gotoInstance(LocationCombatInstance(instance, character))
-        self.actions.append( Action( "Search", Action.search, [], [gotoCombat], [] ) )
-        #gotoDarkForest = lambda: instance.gotoInstance(LocationDarkForest(instance, character))
-        self.actions.append( Action( "go", LocationBase.Action.go, [], [instance.gotoHorizontalInstance], [""]))
+        self.actions.append( LocationBase.Action( "Search", LocationBase.Action.search, [], [gotoCombat], [] ) )
+        self.actions.append( LocationBase.Action( "go", LocationBase.Action.go, [], [instance.gotoHorizontalInstance], [""]))
 
 
 
