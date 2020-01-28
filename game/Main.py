@@ -11,8 +11,6 @@ from Items import Weapon, Item, ItemManager, Armour
 def RNG_under_ten(lower_value = 1, higher_value = 10):
     return random.randint(lower_value, higher_value)
 
-
-
 def leaving_game():
     game_choice = input("Do you wish to leave the forrest behind and live a safe life from now on? (Yes/No)\n")
     escaping = True
@@ -64,8 +62,9 @@ def gameEntry():
 
 itemManager = ItemManager()
 character = Character(itemManager)
-character._forceEquip( Weapon ( itemManager.getMaterial("Rusty"), itemManager.getWeaponType("Dagger") ), silent=True )
-character._forceEquip( Armour ( itemManager.getMaterial("Rusty"), itemManager.getArmourType("Leggings") ), silent=True )
+character._forceEquip( Weapon ( Material("Rusty"), itemManager.getWeaponType("Dagger") ), silent=True )
+# character._forceEquip( Weapon ( itemManager .getMaterial("Rusty"), itemManager.getWeaponType("Dagger") ), silent=True )
+# character._forceEquip( Armour ( itemManager.getMaterial("Rusty"), itemManager.getArmourType("Leggings") ), silent=True )
 #character.inventory.add(itemManager.generateWeapon())
 #character.inventory.add(itemManager.generateWeapon())
 
@@ -77,32 +76,9 @@ gameEntry()
 
 
 def Done():
-    '''
-    DONE: weapons made and default equip created. 
-    DONE: can change the equip.
-    DONE: prevent items from being equiped
-    DONE: reworked the items, material, and equipType to make it OOP
-    DONE: fixed combat with no weapons.
-    DONE: fix damage and other functions
-    DONE: fix displayname for nonetype equipment
-    DONE: fix pop of nonexsistent equipment
-    DONE: rework statemachine => SEEMS IMPLEMENTED, SHOULD TRY IT WITH COMBAT CLASS...
-    DONE: add allow player to move between states -> specifically leaving one and returning to where it was entered. 
-            world -> place -> sub place -> more specific place > and so on
-    DONE: make actions easily visible
-    --main task battle system --
-    DONE: get itemManager in location somehow... 
-    DONE: rework the enemy creation
-    DONE: rework enemy types. -> split size, subjective, and type
-    DONE: add potential enemies to locations
-    DONE: reconsider hierarchy of locations. is a city in a location? can it be surrounded by multiple locatons/ etc
-    DONE: add connected areas and allow for easy movement in between 
-    DONE: examine location
-    DONE: gotoHorizontalLocation?
-    '''
+    pass
 
 def Todo():
-
     '''
     add easy alternative selection for list options (inventory, locations(gocommande), etc)
     rework enemy creation
@@ -131,6 +107,8 @@ def Todo():
     add items
     add npc's
     make AI!!!
+
+    was making the sql tables and making modifations in the items.py file: refactoring.
     
 
 '''

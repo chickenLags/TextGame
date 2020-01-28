@@ -14,22 +14,22 @@ class Equipment:
 
     def _equipPop(self, equipment, silent=False):
         dequiped = None
-        if equipment.equipType.itemType == itemType.WEAPON:
+        if equipment.equipType.itemType == EquipType.type.WEAPON:
             dequiped = self.weapon
             self.weapon = equipment
-        elif equipment.equipType.itemType == itemType.SHIELD:
+        elif equipment.equipType.itemType == EquipType.type.SHIELD:
             dequiped = self.shield
             self.shield = equipment
-        elif equipment.equipType.itemType == itemType.HEAD:
+        elif equipment.equipType.itemType == EquipType.type.HEAD:
             dequiped = self.head
             self.head = equipment
-        elif equipment.equipType.itemType == itemType.BODY:
+        elif equipment.equipType.itemType == EquipType.type.BODY:
             dequiped = self.body
             self.body = equipment
-        elif equipment.equipType.itemType == itemType.LEGS:
+        elif equipment.equipType.itemType == EquipType.type.LEGS:
             dequiped = self.legs
             self.legs = equipment
-        elif equipment.equipType.itemType == itemType.HANDS:
+        elif equipment.equipType.itemType == EquipType.type.HANDS:
             dequiped = self.hands
             self.hands = equipment
         else:
@@ -40,50 +40,50 @@ class Equipment:
         return dequiped
 
     def erode(self, itemType):
-        if itemType == itemType.WEAPON and self.weapon:
+        if itemType == EquipType.type.WEAPON and self.weapon:
             self.weapon.durability -= 1
             if self.weapon.durability <=0:
                 self.weapon = None
-        elif itemType == itemType.SHIELD and self.shield:
+        elif itemType == EquipType.type.SHIELD and self.shield:
             self.shield.durability -= 1
             if self.shield.durability <= 0:
                 self.shield = None
-        elif itemType == itemType.HEAD and self.head:
+        elif itemType == EquipType.type.HEAD and self.head:
             self.head.durability -= 1
             if self.head.durability <= 0:
                 self.head = None
-        elif itemType == itemType.BODY and self.body:
+        elif itemType == EquipType.type.BODY and self.body:
             self.body.durability -= 1
             if self.body.durability <= 0:
                 self.body = None
-        elif itemType == itemType.LEGS and self.legs:
+        elif itemType == EquipType.type.LEGS and self.legs:
             self.legs.durability -= 1
             if self.legs.durability <= 0:
                 self.legs = None
-        elif itemType == itemType.HANDS and self.hands:
+        elif itemType == EquipType.type.HANDS and self.hands:
             self.hands.durability -= 1
             if self.hands.durability <= 0:
                 self.hands = None
 
     def getName(self, itemType):
-        if itemType == itemType.WEAPON:
+        if itemType == EquipType.type.WEAPON:
             if self.weapon:
                 return self.weapon.name
             else:
                 return "Fist"
-        elif itemType == itemType.SHIELD:
+        elif itemType == EquipType.type.SHIELD:
             if self.shield:
                 return self.shield.name
-        elif itemType == itemType.HEAD:
+        elif itemType == EquipType.type.HEAD:
             if self.head:
                 return self.head.name
-        elif itemType == itemType.BODY:
+        elif itemType == EquipType.type.BODY:
             if self.body:
                 return self.body.name
-        elif itemType == itemType.LEGS:
+        elif itemType == EquipType.type.LEGS:
             if self.legs:
                 return self.legs.name
-        elif itemType == itemType.HANDS:
+        elif itemType == EquipType.type.HANDS:
             if self.hands:
                 return self.hands.name
 

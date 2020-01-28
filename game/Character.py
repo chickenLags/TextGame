@@ -1,7 +1,7 @@
 import random
 from Inventory import Inventory
 from Equipment import Equipment
-from Items import itemType
+from Items import EquipType
 
 
 
@@ -30,7 +30,7 @@ class Character:
         return self.stats['strength']
 
     def weaponErosion(self):
-        self.equipment.erode(itemType.WEAPON)
+        self.equipment.erode(EquipType.type.WEAPON)
 
 
 
@@ -80,9 +80,9 @@ class Character:
             print(" \t" + key + ": " + str(self.stats[key]))
 
         print("\n======= Equipment =======")
-        print("\tWeapon:  " + str(self.equipment.getName(itemType.WEAPON)) )
-        print("\tShield:  " + str(self.equipment.getName(itemType.SHIELD)))
-        print("\tHead  :  " + str(self.equipment.getName(itemType.HEAD)))
-        print("\tBody  :  " + str(self.equipment.getName(itemType.BODY)))
-        print("\tHands :  " + str(self.equipment.getName(itemType.HANDS)))
-        print("\tLegs  :  " + str(self.equipment.getName(itemType.LEGS)) + "\n")
+        print("\tWeapon:  " + str(self.equipment.getName(EquipType.type.WEAPON)) )
+        print("\tShield:  " + str(self.equipment.getName(EquipType.type.SHIELD)))
+        print("\tHead  :  " + str(self.equipment.getName(EquipType.type.HEAD)))
+        print("\tBody  :  " + str(self.equipment.getName(EquipType.type.BODY)))
+        print("\tHands :  " + str(self.equipment.getName(EquipType.type.HANDS)))
+        print("\tLegs  :  " + str(self.equipment.getName(EquipType.type.LEGS)) + "\n")

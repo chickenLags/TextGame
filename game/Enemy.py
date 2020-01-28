@@ -1,5 +1,5 @@
 import random
-from Items import itemType
+from Items import EquipType
 class Enemy:
     # monsterList = ["Bunny", "Deer", "Small Goblin", "Big Goblin", "Werewolf",
     #               "Ogre", "Armoured Ogre", "Small Dragon", "Dragon", "Dark Wyvern", "Dark Spawn", "Cold One"]
@@ -32,7 +32,7 @@ class Enemy:
             # attempt to damage the monster
         if random.randint(0, 100) < 70:
             self.life -= character.getDamage()
-            print("you swing your " + str(character.equipment.getName(itemType.WEAPON)) + " and hit the " + self.name + " for " + str(character.getDamage()) + ".")
+            print("you swing your " + str(character.equipment.getName(EquipType.type.WEAPON)) + " and hit the " + self.name + " for " + str(character.getDamage()) + ".")
             print("enemy has " + str(self.life) + " left.")
             character.weaponErosion()
         else:

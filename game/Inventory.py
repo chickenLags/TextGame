@@ -8,13 +8,13 @@ class Inventory:
     def getInventoryAsList(self):
         temp = []
         for item in self.inventory:
-            temp.append(item.name);
+            temp.append(item.name)
         return temp
 
     def displayInventoryAsList(self):
         temp = []
         for item in self.inventory:
-            temp.append(item.name);
+            temp.append(item.name)
         print(temp)
 
     def canEquip(self, itemName):

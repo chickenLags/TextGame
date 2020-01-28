@@ -11,7 +11,7 @@ class Action:
     scan = ['scan', 'sc']
     search = ['search', "s"]
     stats = ['stats', 's']
-    actions = ['actions', 'action', 'a']
+    actions = ['actions', 'action', 'a', 'help', 'h']
     examine = ['examine', 'e']
     go = ["go", "enter", "goto"]
     look = ["look", "l", "examine", "e"]
