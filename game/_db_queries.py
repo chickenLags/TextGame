@@ -1,4 +1,5 @@
-import sqlite3
+import sqlite3, math
+from Table import Table
 
 con = sqlite3.connect('test.db')
 c = con.cursor()
@@ -16,12 +17,6 @@ def addMaterials():
     c.execute("INSERT INTO materials VALUES (6, 'Dragon scales', 4, 7, 4, 1, 1)")
     c.execute("INSERT INTO materials VALUES (7, 'leather', 0, 2, 15, 0, 1)")
 
-def readMaterialsTable():
-    rows = c.execute("SELECT * FROM materials")
-    for row in rows:
-        print(row)
-
-# readMaterialsTable(c)
 
 def createWeaponsBlueprintTable():
     c.execute('''
@@ -46,19 +41,41 @@ def createWeaponsTable():
     ''')
 
 def showTable(tableName):
-    rows = c.execute('''
-        SELECT *
-        FROM materials
+    headers = c.execute("PRAGMA table_info(" + tableName + ")").fetchall()
+    contents = c.execute('''
+        SELECT * 
+        FROM ''' + tableName ).fetchall()
+
+    sanitizedHeaders = ['' for i in range(len(headers))]
+    for index, header in enumerate(headers):
+        sanitizedHeaders[index] = header[1]
+
+
+    rows = [sanitizedHeaders]
+    for content in contents:
+        rows.append(content)
+    
+    table = Table(rows, tableName)
+    table.print()
+
+def showTableNames():
+    cursor = c.execute('''
+        SELECT name 
+        FROM sqlite_master
+        WHERE type = "table"
     ''')
-    #, (tableName, ) )
 
-    for row in rows:
-        print(row)
+    table = Table(cursor.fetchall(), "Table Names")
+    table.print()
+    
+    
 
-    # All functions have already run, showTable and showTables should be implemented
-    # so i can see in one glance what has been done.
 
+showTableNames()
 showTable('materials')
+showTable('weapons')
+showTable('weaponBlueprints')
+
 
 con.commit()
 
