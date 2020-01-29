@@ -46,13 +46,19 @@ def createWeaponsTable():
     ''')
 
 def showTable(tableName):
-    c.execute('''
+    rows = c.execute('''
         SELECT *
-        FROM
+        FROM materials
     ''')
+    #, (tableName, ) )
+
+    for row in rows:
+        print(row)
 
     # All functions have already run, showTable and showTables should be implemented
     # so i can see in one glance what has been done.
+
+showTable('materials')
 
 con.commit()
 
