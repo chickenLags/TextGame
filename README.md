@@ -1,5 +1,6 @@
 # TextGame
 attempt to make a text based game
 
+Todo: items.py
 
-hello testing fsjfnlsgjns
+test
