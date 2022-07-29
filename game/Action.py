@@ -1,8 +1,9 @@
 from inspect import signature
-from Location import TopLevelLocation, LocationBase, LocationInventory
+from locations.Location import TopLevelLocation, LocationBase
+from locations.location_inventory import LocationInventory
+
 
 class Action:
-
     leave = ["leave", "l", "exit", "escape"]
     inventory = ['inventory', 'inv', 'i']
     equip = ["equip", "e"]
@@ -45,7 +46,7 @@ class Instance:
         gotoInventory = lambda: self.gotoInstance(LocationInventory(self, character))
         self.baseActions.append(Action("Actions", Action.actions, ["==== available actions ====:"], [self.displayActions, self.gotoHorizontalInstance], []))
         self.baseActions.append(Action("DisplayInstanceTrree", ["DisplayInstanceThree", "d"], ["==== available something ====:"], [self.displayInstances], []))
-        self.baseActions.append(Action("Stats", Action.stats, [], [character.displayStats], []))
+        self.baseActions.append(Action("Stats", Action.stats, [], [character.display_stats], []))
         self.baseActions.append(Action("Inventory", Action.inventory, [], [gotoInventory], [""]))
         self.baseActions.append(Action("Look around", Action.look, [], [lookFunction], []))
 
@@ -107,8 +108,9 @@ class Instance:
                     self.gotoInstance(c(self, LocationBase.character))
         else:
             print("\n==== Bordering Area's ====:")
-            temp = []
-            for location in self.getCurrentInstance().connectedAreas:
-                temp.append(location.__name__[8:])
-
-            print(str(temp) + "\n")
+            [print(str(location.__name__[8:])) for location in self.getCurrentInstance().connectedAreas]
+            # temp = []
+            # for location in self.getCurrentInstance().connectedAreas:
+            #     temp.append(location.__name__[8:])
+            #
+            # print(str(temp) + "\n")

@@ -14,10 +14,10 @@ class Table:
         self.padding = 2
         self.fullWidth = 0
 
-        self.setDimensions()
-        self.makeTable()
+        self.set_dimensions()
+        self.make_table()
     
-    def setDimensions(self):
+    def set_dimensions(self):
         self.greatestWidth = [0 for i in range(self.columnCount)]
         self.widths = [[0 for i in range(self.columnCount)] for j in range(self.rowCount)]
 
@@ -32,7 +32,7 @@ class Table:
             self.greatestWidth[i] += 1
             self.fullWidth += self.greatestWidth[i] + self.padding + 1
 
-    def makeTable(self):
+    def make_table(self):
         self.requiredSpaces = [[0 for i in range(self.columnCount)] for j in range(self.rowCount)]
         
         for rowIndex, row in enumerate(self.rows):
@@ -60,11 +60,11 @@ class Table:
             print("table '" + self.title.capitalize() + "' has no content")
             return
         
-        self.printTitle()
+        self.print_title()
         print(self.table)
 
-    def printTitle(self):
-        nonTitleDistance = math.ceil (self.fullWidth / 2)  - len(self.title)
-        offset = ( ("=" * nonTitleDistance ) )
+    def print_title(self):
+        non_title_distance = math.ceil (self.fullWidth / 2)  - len(self.title)
+        offset = ( ("=" * non_title_distance ) )
         
         print(offset, self.title.capitalize(), offset)

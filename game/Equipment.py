@@ -1,93 +1,53 @@
-from Items import *
+from __future__ import annotations
+
+from typing import List, Optional
+
+from items.Item import *
+from items.item_type import ItemType
 
 
 class Equipment:
 
-    def __init__(self, itemManager):
+    def __init__(self):
+        self._equipment: List[ItemType, Equipable | None] = {
+            ItemType.WEAPON: None,
+            ItemType.SHIELD: None,
+            ItemType.HEAD: None,
+            ItemType.BODY: None,
+            ItemType.LEGS: None,
+            ItemType.HANDS: None,
+        }
 
-        self.weapon     = None
-        self.shield     = None
-        self.head       = None
-        self.body       = None
-        self.legs       = None
-        self.hands      = None
+    def unequip(self, item_type: ItemType):
+        unequiped = self._equipment[item_type]
+        self._equipment[item_type] = None
+        return unequiped
 
-    def _equipPop(self, equipment, silent=False):
-        dequiped = None
-        if equipment.equipType.itemType == EquipType.type.WEAPON:
-            dequiped = self.weapon
-            self.weapon = equipment
-        elif equipment.equipType.itemType == EquipType.type.SHIELD:
-            dequiped = self.shield
-            self.shield = equipment
-        elif equipment.equipType.itemType == EquipType.type.HEAD:
-            dequiped = self.head
-            self.head = equipment
-        elif equipment.equipType.itemType == EquipType.type.BODY:
-            dequiped = self.body
-            self.body = equipment
-        elif equipment.equipType.itemType == EquipType.type.LEGS:
-            dequiped = self.legs
-            self.legs = equipment
-        elif equipment.equipType.itemType == EquipType.type.HANDS:
-            dequiped = self.hands
-            self.hands = equipment
-        else:
-            print("Item to be equiped does not fit any slot. name: " + equipment.name)
-            return equipment
+    def equip(self, equipment: Equipable, silent=False):
+        self._equipment[equipment.equipType.type] = equipment
+
         if not silent:
-            print("Equiped the " + equipment.name.lower() + "!")
-        return dequiped
+            print("Equiped the " + equipment.get_name().lower() + "!")
 
-    def erode(self, itemType):
-        if itemType == EquipType.type.WEAPON and self.weapon:
-            self.weapon.durability -= 1
-            if self.weapon.durability <=0:
-                self.weapon = None
-        elif itemType == EquipType.type.SHIELD and self.shield:
-            self.shield.durability -= 1
-            if self.shield.durability <= 0:
-                self.shield = None
-        elif itemType == EquipType.type.HEAD and self.head:
-            self.head.durability -= 1
-            if self.head.durability <= 0:
-                self.head = None
-        elif itemType == EquipType.type.BODY and self.body:
-            self.body.durability -= 1
-            if self.body.durability <= 0:
-                self.body = None
-        elif itemType == EquipType.type.LEGS and self.legs:
-            self.legs.durability -= 1
-            if self.legs.durability <= 0:
-                self.legs = None
-        elif itemType == EquipType.type.HANDS and self.hands:
-            self.hands.durability -= 1
-            if self.hands.durability <= 0:
-                self.hands = None
+    def erode(self, item_type: ItemType):
+        # @Todo: move erosion to the usage function of the equiable: weapon.attack or armour.defend
+        current_equipment = self._equipment[item_type]
+        if current_equipment is None:
+            return
 
-    def getName(self, itemType):
-        if itemType == EquipType.type.WEAPON:
-            if self.weapon:
-                return self.weapon.name
-            else:
-                return "Fist"
-        elif itemType == EquipType.type.SHIELD:
-            if self.shield:
-                return self.shield.name
-        elif itemType == EquipType.type.HEAD:
-            if self.head:
-                return self.head.name
-        elif itemType == EquipType.type.BODY:
-            if self.body:
-                return self.body.name
-        elif itemType == EquipType.type.LEGS:
-            if self.legs:
-                return self.legs.name
-        elif itemType == EquipType.type.HANDS:
-            if self.hands:
-                return self.hands.name
+        current_equipment.durability -= 1
 
-        return "None"
+        if current_equipment.durability <= 0:
+            self._equipment[item_type] = None
 
-class EmptySlot:
-    name = "None"
+    def getName(self, item_type: ItemType):
+        current_equipment = self._equipment[item_type]
+        if current_equipment is None:
+            if item_type == EquipType.type.WEAPON:
+                return 'Fists'
+            return ' None'
+
+        return current_equipment.get_name()
+
+    def get(self, item_type: ItemType):
+        return self._equipment[item_type]

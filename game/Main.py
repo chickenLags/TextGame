@@ -1,13 +1,11 @@
-import random
 from Character import Character
-from Enemy import Enemy
 from Action import Action, Instance
-from Location import *
-from Items import Weapon, Item, ItemManager, Armour
+from locations.Location import *
+from items.Item import Weapon
+from items.item_manager import ItemManager
+# from locations.location_forest import LocationForest
 
 
-
-#Random Number Generator
 def RNG_under_ten(lower_value = 1, higher_value = 10):
     return random.randint(lower_value, higher_value)
 
@@ -60,55 +58,71 @@ def gameEntry():
                 instance.printMessages( instance.getCurrentInstance().elseMessages )
 
 
-itemManager = ItemManager()
-character = Character(itemManager)
-character._forceEquip( Weapon ( Material("Rusty"), itemManager.getWeaponType("Dagger") ), silent=True )
-# character._forceEquip( Weapon ( itemManager .getMaterial("Rusty"), itemManager.getWeaponType("Dagger") ), silent=True )
-# character._forceEquip( Armour ( itemManager.getMaterial("Rusty"), itemManager.getArmourType("Leggings") ), silent=True )
-#character.inventory.add(itemManager.generateWeapon())
-#character.inventory.add(itemManager.generateWeapon())
+item_manager = ItemManager()
+character = Character()
+character._force_equip(
+    Weapon (
+        item_manager.get_material('Rusty'),
+        item_manager.get_weapon_type("Dagger")
+    ),
+    silent=True
+)
+
+# character._forceEquip( Weapon ( item_manager .getMaterial("Rusty"), item_manager.getWeaponType("Dagger") ),
+# silent=True )
+# character._forceEquip( Armour ( item_manager.getMaterial("Rusty"), item_manager.getArmourType("Leggings") ),
+# silent=True )
+#character.inventory.add(item_manager.generateWeapon())
+#character.inventory.add(item_manager.generateWeapon())
 
 
-instance = Instance(itemManager, character)
+instance = Instance(item_manager, character)
 instance.gotoInstance(LocationForest(instance, character, Action))
 gameEntry()
 
 
+'''
+@Todos:
+Currently program is not working because of a circular dependency in locations (forest and Dark forest)
+- use graph to define how world looks instead of giving adjacent locations to location.
 
-def Done():
-    pass
+add easy alternative selection for list options (inventory, locations(gocommande), etc)
+rework enemy creation
+rework battle functions
+rework battle mechanics
+add situational things to battles
+create a combat situation ~> multiple enemies and more interesting dynamics
+fix defences for the player
+fix defences for the enemy
+add be able to determine the rarity of monsters.
+expand on monster skills and behavior
+make the monsters fit the levels better.
+add other results for search action
+add method of journeying through areas -> make it more engaging. perhaps multiple locations in the forest (location)?
+SUSPENDED-UNNESSARY: add a method to make use of chance
+examine weapon - > stats should be its own location.
+add "examine" for items in inventory
+add movement of monsters or npcs between locations.
 
-def Todo():
-    '''
-    add easy alternative selection for list options (inventory, locations(gocommande), etc)
-    rework enemy creation
-    rework battle functions
-    rework battle mechanics
-    add situational things to battles
-    create a combat situation ~> multiple enemies and more interesting dynamics
-    fix defences for the player
-    fix defences for the enemy
-    add be able to determine the rarity of monsters.
-    expand on monster skills and behavior
-    make the monsters fit the levels better.
-    add other results for search action
-    add method of journeying through areas -> make it more engaging. perhaps multiple locations in the forest (location)?
-    SUSPENDED-UNNESSARY: add a method to make use of chance
-    examine weapon - > stats should be its own location.
-    add "examine" for items in inventory
-    add movement of monsters or npcs between locations.
 
-    
-    add visual interface
+add visual interface
 
-    add story?
-    add save game functionality
-    add random events
-    add items
-    add npc's
-    make AI!!!
+add story?
+add save game functionality
+add random events
+add items
+add npc's
+make AI!!!
 
-    was making the sql tables and making modifations in the items.py file: refactoring.
-    
+add gathering:
+- add mineral nodes
+- add organic nodes (flowers, trees, mushrooms)
+- add wildlive (hunting deer, rabbits, bears, etc)
+- weight limits or item limit. require cart or other help to gather more and to move it.
+
+refactor main loop for readability
+
+was making the sql tables and making modifations in the items.py file: refactoring.
+
 
 '''

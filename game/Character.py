@@ -1,51 +1,58 @@
 import random
+import string
+
+from Enemy import Enemy
 from Inventory import Inventory
 from Equipment import Equipment
-from Items import EquipType
-
+from items.Item import EquipType, Equipable
+from items.item_type import ItemType
 
 
 class Character:
-    def __init__(self, itemManager):
+    def __init__(self):
         self.stats = {"level": 1,  "title": "Wanderer",  "strength": 1,  "experience": 0, "hp": 20}
         self.inventory = Inventory()
-        self.equipment = Equipment(itemManager)
+        self.equipment = Equipment()
 
-    def _forceEquip(self, equipment, silent=False):
-        self.equipment._equipPop(equipment, silent)
+    def _force_equip(self, equipment: Equipable, silent=False):
+        self.equipment.equip(equipment, silent)
 
-    def equip(self, equipmentName):
-        if not self.inventory.canEquip(equipmentName):
-            print ("can't equip this item")
-        else:
-            self.inventory.add( self.equipment._equipPop( self.inventory.popItem( equipmentName ) ) )
+    def equip(self, equipment_name: string):
+        if not self.inventory.can_equip(equipment_name):
+            return print ("can't equip this item")
+
+        to_equip = self.inventory.pop(equipment_name)
+        unequiped = self.equipment.unequip(to_equip.equipType.type)
+
+        if unequiped:
+            self.inventory.add(unequiped)
+        self.equipment.equip(to_equip)
 
 
-    def getInventoryAsList(self):
-        return self.inventory.getInventoryAsList()
+    def display_inventory(self):
+        self.inventory.display()
 
-    def getDamage(self):
-        if self.equipment.weapon:
-            return self.stats['strength'] + self.equipment.weapon.getDamage()
+    def get_damage(self):
+        weapon = self.equipment.get(ItemType.WEAPON)
+        if weapon:
+            return self.stats['strength'] + weapon.get_damage()
         return self.stats['strength']
 
-    def weaponErosion(self):
+    def erode_weapon(self):
         self.equipment.erode(EquipType.type.WEAPON)
 
+    def max_experience(self):
+        temp_exp_cap = self.stats["level"]
+        exp_till_next_level = temp_exp_cap * temp_exp_cap + 20
+        return exp_till_next_level
 
-
-    def maxExperience(self):
-        tempExpCap = self.stats["level"]
-        expTillNextLevel = tempExpCap * tempExpCap + 20
-        return expTillNextLevel
-
-    def attack(self, enemy):
-        self.stats["hp"] -= enemy.getDamage()
-        if not self.isAlive():
-            print(enemy.getDeathMessage())
+    def attack(self, enemy: Enemy):
+        self.stats["hp"] -= enemy.get_damage()
+        if not self.is_alive():
+            print(enemy.get_death_message())
             self.die()
 
-    def isAlive(self):
+    def is_alive(self):
         if self.stats["hp"] <= 0:
             return False
         return True
@@ -56,33 +63,33 @@ class Character:
         quit()
 
 
-    def experience_gain(self, expReceived):
-        totalExp = self.stats["experience"] + expReceived
-        expLeft = True
+    def experience_gain(self, experience):
+        total_exp = self.stats["experience"] + experience
+        has_exp_left = True
 
-        while expLeft:
-            expTillNextLevel = self.maxExperience()
-            if totalExp < expTillNextLevel:
-                self.stats["experience"] += expReceived
-                print("(" + str(expReceived) + " EXP obtained)")
-                expLeft = False
+        while has_exp_left:
+            exp_till_next_level = self.max_experience()
+            if total_exp < exp_till_next_level:
+                self.stats["experience"] += experience
+                print("(" + str(experience) + " EXP obtained)")
+                has_exp_left = False
             else:
                 print("You feel stronger, what a great feeling! And you feel completely Restored!!")
                 self.stats["experience"] = 0
                 self.stats["level"] += 1
                 self.stats["strength"] += random.randrange(1, 3)
                 self.stats["hp"] += 10 * self.stats["level"]
-                totalExp = expReceived - expTillNextLevel
+                total_exp = experience - exp_till_next_level
 
-    def displayStats(self):
+    def display_stats(self):
         print("======= Current Stats =======")
         for key in self.stats:
             print(" \t" + key + ": " + str(self.stats[key]))
 
         print("\n======= Equipment =======")
-        print("\tWeapon:  " + str(self.equipment.getName(EquipType.type.WEAPON)) )
-        print("\tShield:  " + str(self.equipment.getName(EquipType.type.SHIELD)))
-        print("\tHead  :  " + str(self.equipment.getName(EquipType.type.HEAD)))
-        print("\tBody  :  " + str(self.equipment.getName(EquipType.type.BODY)))
-        print("\tHands :  " + str(self.equipment.getName(EquipType.type.HANDS)))
-        print("\tLegs  :  " + str(self.equipment.getName(EquipType.type.LEGS)) + "\n")
+        print("\tWeapon:  " + str(self.equipment.getName(ItemType.WEAPON)) )
+        print("\tShield:  " + str(self.equipment.getName(ItemType.SHIELD)))
+        print("\tHead  :  " + str(self.equipment.getName(ItemType.HEAD)))
+        print("\tBody  :  " + str(self.equipment.getName(ItemType.BODY)))
+        print("\tHands :  " + str(self.equipment.getName(ItemType.HANDS)))
+        print("\tLegs  :  " + str(self.equipment.getName(ItemType.LEGS)) + "\n")
