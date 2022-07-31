@@ -5,7 +5,8 @@ from Enemy import Enemy
 from Inventory import Inventory
 from Equipment import Equipment
 from Table import Table
-from items.Item import EquipType, Equipable
+from items.equip_type import EquipType
+from items.equipable import Equipable
 from items.item_type import ItemType
 
 
@@ -19,7 +20,7 @@ class Character:
         self.equipment.equip(equipment, silent)
 
     def equip(self, equipment_name: string):
-        if not self.inventory.can_equip(equipment_name):
+        if not self.inventory.find(equipment_name):
             return print ("can't equip this item")
 
         to_equip = self.inventory.pop(equipment_name)

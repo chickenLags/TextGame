@@ -3,7 +3,6 @@ from random import random, randint
 from typing import List
 
 from exceptions.weapon_type_not_found_exception import WeaponTypeNotFoundException
-from items.Item import Weapon
 from items.armour import Armour
 from items.equip_type import EquipType
 from items.item_type import ItemType
@@ -11,6 +10,7 @@ from items.material import Material
 from items.shield import Shield
 
 from exceptions.material_not_found_exception import MaterialNotFoundException
+from items.weapon import Weapon
 
 
 class ItemManager:
@@ -41,6 +41,7 @@ class ItemManager:
         self.weaponTypes.append(EquipType("Dagger", ItemType.WEAPON, DEFDMG=1, dur=5))
         self.weaponTypes.append(EquipType("Mace", ItemType.WEAPON, DEFDMG=3, dur=7))
         self.weaponTypes.append(EquipType("Sword", ItemType.WEAPON, DEFDMG=5, dur=5))
+        self.weaponTypes.append(EquipType("Long sword", ItemType.WEAPON, DEFDMG=7, dur=7))
         self.weaponTypes.append(EquipType("Great Sword", ItemType.WEAPON, DEFDMG=7, dur=3))
 
 

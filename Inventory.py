@@ -2,7 +2,10 @@ import string
 from typing import List
 
 from Table import Table
-from items.Item import Item, Equipable, Weapon
+from exceptions.no_item_found import NoItemFoundException
+from items.Item import Item
+from items.equipable import Equipable
+from items.weapon import Weapon
 
 
 class Inventory:
@@ -31,10 +34,7 @@ class Inventory:
         ]
 
     def get_weapons(self):
-        return [
-            item for item in self.inventory
-            if isinstance(item, Weapon)
-        ]
+        return [item for item in self.inventory if isinstance(item, Weapon)]
 
     def get_misc_items(self):
         return [
@@ -42,13 +42,13 @@ class Inventory:
             if not isinstance(item, Equipable) and not isinstance(item, Weapon)
         ]
 
-    def can_equip(self, name: string):
-        equipables = self.get_equips() + self.get_weapons()
+    def find(self, name: string):
+        item = [item for item in self.inventory if item.get_name().lower() == name.lower()]
 
-        for item in equipables:
-            if item.get_name().lower() == name.lower():
-                return True
-        return False
+        if not item:
+            raise NoItemFoundException(name)
+
+        return item[0]
 
     def add(self, item: Item):
         self.inventory.append(item)

@@ -1,6 +1,8 @@
 import random
 
-from items.Item import EquipType
+from items.equip_type import EquipType
+
+
 class Enemy:
     # monsterList = ["Bunny", "Deer", "Small Goblin", "Big Goblin", "Werewolf",
     #               "Ogre", "Armoured Ogre", "Small Dragon", "Dragon", "Dark Wyvern", "Dark Spawn", "Cold One"]

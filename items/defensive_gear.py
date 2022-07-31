@@ -1,4 +1,4 @@
-from items.Item import Equipable
+from items.equipable import Equipable
 
 
 class DefensiveGear(Equipable):

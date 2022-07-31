@@ -1,10 +1,9 @@
 from Character import Character
 from Action import Action, Instance
-from items.item_type import ItemType
+from items.weapon import Weapon
 from locations.Location import *
-from items.Item import Weapon
+
 from items.item_manager import ItemManager
-# from locations.location_forest import LocationForest
 
 
 def RNG_under_ten(lower_value = 1, higher_value = 10):
@@ -41,31 +40,31 @@ def getAction(string):
 
 
 def gameEntry():
-    while instance.playing:
-        instance.running = True
-        instance.printMessages(instance.getCurrentInstance().entryMessages)
-        while instance.running:
-            instance.printMessages(instance.getCurrentInstance().loopEntryMessages)
-            action, argument = getAction(instance.getCurrentInstance().inputMessage)
-            if instance.getCurrentInstance().containsAction(action):
-                retrievedAction = instance.getCurrentInstance().containsAction(action)
-                instance.printMessages( retrievedAction.entryMessages )
+    while game.playing:
+        game.running = True
+        game.printMessages(game.getCurrentInstance().entryMessages)
+        while game.running:
+            game.printMessages(game.getCurrentInstance().loopEntryMessages)
+            action, argument = getAction(game.getCurrentInstance().inputMessage)
+            if game.getCurrentInstance().containsAction(action):
+                retrievedAction = game.getCurrentInstance().containsAction(action)
+                game.printMessages(retrievedAction.entryMessages)
                 retrievedAction.compute(argument)
-                instance.printMessages(retrievedAction.endMessages)
-                instance.printMessages(instance.getCurrentInstance().loopEndMessages )
-            elif instance.getBaseActions(action):
-                retrievedAction = instance.getBaseActions(action)
-                instance.printMessages(retrievedAction.entryMessages)
+                game.printMessages(retrievedAction.endMessages)
+                game.printMessages(game.getCurrentInstance().loopEndMessages)
+            elif game.getBaseActions(action):
+                retrievedAction = game.getBaseActions(action)
+                game.printMessages(retrievedAction.entryMessages)
                 retrievedAction.compute(argument)
-                instance.printMessages(retrievedAction.endMessages)
-                instance.printMessages(instance.getCurrentInstance().loopEndMessages)
+                game.printMessages(retrievedAction.endMessages)
+                game.printMessages(game.getCurrentInstance().loopEndMessages)
             else:
-                instance.printMessages( instance.getCurrentInstance().elseMessages )
+                game.printMessages(game.getCurrentInstance().elseMessages)
 
 
 im = ItemManager()
 character = Character()
-w1 = Weapon (im.get_material('Rusty'), im.get_weapon_type("Dagger"))
+w1 = Weapon(im.get_material('Rusty'), im.get_weapon_type("Dagger"))
 character._force_equip(w1, silent=True)
 
 # Testing equiping weapon.
@@ -79,14 +78,20 @@ character._force_equip(w1, silent=True)
 #     print(type_.name, character.equipment.getName(type_))
 
 
-instance = Instance(im, character)
-instance.gotoInstance(LocationForest(instance, character, Action))
+game = Instance(im, character)
+game.gotoInstance(LocationForest(game, character, Action))
 gameEntry()
 
 
 '''
 @Todos:
-add testing
+should change comparator from equipable to item?
+merge equipable and EquipType
+expand ItemType to include Misc items.
+EquipType should exists then too....
+
+store location data in db and make it data based.
+
 Currently program is not working because of a circular dependency in locations (forest and Dark forest)
 - use graph to define how world looks instead of giving adjacent locations to location.
 
@@ -127,6 +132,8 @@ add gathering:
 refactor main loop for readability
 
 was making the sql tables and making modifations in the items.py file: refactoring.
+
+multiple enemy fights
 
 
 '''

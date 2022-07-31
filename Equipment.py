@@ -2,13 +2,14 @@ from __future__ import annotations
 
 from typing import List, Optional
 
-from items.Item import *
+from items.equip_type import EquipType
+from items.equipable import Equipable
 from items.item_type import ItemType
 
 
 class Equipment:
     def __init__(self):
-        self._equipment: List[ItemType, Equipable | None] = {
+        self._equipment: List[ItemType, Optional[Equipable]] = {
             ItemType.WEAPON: None,
             ItemType.OFFHAND: None,
             ItemType.SHIELD: None,
@@ -51,3 +52,4 @@ class Equipment:
 
     def get(self, item_type: ItemType):
         return self._equipment[item_type]
+
