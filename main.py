@@ -1,5 +1,6 @@
 from Character import Character
-from Action import Action, Instance
+from Action import Action
+from game import Game
 from items.weapon import Weapon
 from locations.Location import *
 
@@ -35,7 +36,7 @@ w1 = Weapon(im.get_material('Rusty'), im.get_weapon_type("Dagger"))
 character._force_equip(w1, silent=True)
 
 
-game = Instance(im, character)
+game = Game(im, character)
 game.gotoInstance(LocationForest(game, character, Action))
 game.start()
 
