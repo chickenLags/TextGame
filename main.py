@@ -1,6 +1,5 @@
 from Character import Character
 from Action import Action, Instance
-from exceptions.game_exception import GameException
 from items.weapon import Weapon
 from locations.Location import *
 
@@ -29,42 +28,6 @@ def leaving_game():
         else:
             game_choice = input("What? Do you or don't you? (yes/No)\n")
 
-def getAction(string):
-    command = input(string + "\n\n => ")
-    print("")
-    if command.count(" ") > 0:
-        action, argument = command.split(" ", 1)
-        return action, argument
-
-    else:
-        return command, ""
-
-
-def game_entry():
-    while game.playing:
-        game.running = True
-        game.printMessages(game.getCurrentInstance().entryMessages)
-        while game.running:
-            try:
-                game.printMessages(game.getCurrentInstance().loopEntryMessages)
-                action, argument = getAction(game.getCurrentInstance().inputMessage)
-                if game.getCurrentInstance().containsAction(action):
-                    retrievedAction = game.getCurrentInstance().containsAction(action)
-                    game.printMessages(retrievedAction.entryMessages)
-                    retrievedAction.compute(argument)
-                    game.printMessages(retrievedAction.endMessages)
-                    game.printMessages(game.getCurrentInstance().loopEndMessages)
-                elif game.getBaseActions(action):
-                    retrievedAction = game.getBaseActions(action)
-                    game.printMessages(retrievedAction.entryMessages)
-                    retrievedAction.compute(argument)
-                    game.printMessages(retrievedAction.endMessages)
-                    game.printMessages(game.getCurrentInstance().loopEndMessages)
-                else:
-                    game.printMessages(game.getCurrentInstance().elseMessages)
-            except GameException as e:
-                print(f"[ALERT] {e.message}\n")
-
 
 im = ItemManager()
 character = Character()
@@ -74,13 +37,11 @@ character._force_equip(w1, silent=True)
 
 game = Instance(im, character)
 game.gotoInstance(LocationForest(game, character, Action))
-game_entry()
-
+game.start()
 
 
 '''
 @Todos:
-catch Inventory errors to prevent game from crashing?
 should change comparator from equipable to item?
 merge equipable and EquipType
 expand ItemType to include Misc items.

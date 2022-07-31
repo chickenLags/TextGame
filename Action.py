@@ -1,4 +1,6 @@
 from inspect import signature
+
+from exceptions.game_exception import GameException
 from locations.Location import TopLevelLocation, LocationBase
 from locations.location_inventory import LocationInventory
 
@@ -108,9 +110,40 @@ class Instance:
                     self.gotoInstance(c(self, LocationBase.character))
         else:
             print("\n==== Bordering Area's ====:")
-            [print(str(location.__name__[8:])) for location in self.getCurrentInstance().connectedAreas]
-            # temp = []
-            # for location in self.getCurrentInstance().connectedAreas:
-            #     temp.append(location.__name__[8:])
-            #
-            # print(str(temp) + "\n")
+            [print(str(loc.__name__[8:])) for loc in self.getCurrentInstance().connectedAreas]
+
+    def getAction(self, string):
+        command = input(string + "\n\n => ")
+        print("")
+        if command.count(" ") > 0:
+            action, argument = command.split(" ", 1)
+            return action, argument
+
+        else:
+            return command, ""
+
+    def start(self):
+        while self.playing:
+            self.running = True
+            self.printMessages(self.getCurrentInstance().entryMessages)
+            while self.running:
+                try:
+                    self.printMessages(self.getCurrentInstance().loopEntryMessages)
+                    action, argument = self.getAction(self.getCurrentInstance().inputMessage)
+                    if self.getCurrentInstance().containsAction(action):
+                        retrievedAction = self.getCurrentInstance().containsAction(action)
+                        self.printMessages(retrievedAction.entryMessages)
+                        retrievedAction.compute(argument)
+                        self.printMessages(retrievedAction.endMessages)
+                        self.printMessages(self.getCurrentInstance().loopEndMessages)
+                    elif self.getBaseActions(action):
+                        retrievedAction = self.getBaseActions(action)
+                        self.printMessages(retrievedAction.entryMessages)
+                        retrievedAction.compute(argument)
+                        self.printMessages(retrievedAction.endMessages)
+                        self.printMessages(self.getCurrentInstance().loopEndMessages)
+                    else:
+                        self.printMessages(self.getCurrentInstance().elseMessages)
+                except GameException as e:
+                    print(f"[ALERT] {e.message}\n")
+
