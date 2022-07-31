@@ -1,79 +1,111 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3361837e-baf5-49d5-bc3f-7a0c88d25c38" name="Default" comment="">
+    <list default="true" id="b9aba1f5-8f09-49e0-911e-cc7cc5a3aaff" name="Changes" comment="Changes">
+      <change afterPath="$PROJECT_DIR$/.idea/TextGame.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exceptions/weapon_type_not_found_exception.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/TextGame Python.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/.ropeproject/config.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/.ropeproject/objectdb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/.idea/game.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/Action.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/Character.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/Enemy.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/Equipment.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/Inventory.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/Main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/Save.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/Table.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/_db_queries.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/items/Item.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/items/armour.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/items/defensive_gear.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/items/equip_type.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/items/item_manager.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/items/item_type.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/items/material.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/items/shield.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/locations/Location.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/locations/location_base.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/locations/location_combat.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/locations/location_dark_forest.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/locations/location_forest.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/locations/location_inventory.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/locations/location_leave_game.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/locations/location_shop.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/locations/location_village.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/test.db" beforeDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ComposerSettings">
-    <execution>
-      <executable />
-    </execution>
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Python Script" />
-      </list>
-    </option>
+    <execution />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectId" id="1WnsEq70YyNiPXpAPC9eYEfshZm" />
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="1" id="Add" />
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2CdneBPKeFevR4bBn4z0vmVkr7y" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Roy\Development\TextGame\exceptions" />
+    </key>
   </component>
-  <component name="SvnConfiguration">
-    <configuration />
-  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="3361837e-baf5-49d5-bc3f-7a0c88d25c38" name="Default" comment="" />
-      <created>1545232350532</created>
+      <changelist id="b9aba1f5-8f09-49e0-911e-cc7cc5a3aaff" name="Changes" comment="" />
+      <created>1659141423269</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1545232350532</updated>
-      <workItem from="1579796587047" duration="2340000" />
-      <workItem from="1579852926251" duration="2191000" />
-      <workItem from="1580230957025" duration="202000" />
-      <workItem from="1580285005925" duration="356000" />
+      <updated>1659141423269</updated>
+      <workItem from="1659261714961" duration="764000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
