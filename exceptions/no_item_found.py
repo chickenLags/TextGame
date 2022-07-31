@@ -1,4 +1,7 @@
 
-class NoItemFoundException(Exception):
-    def __int__(self, searched_name):
-        super(f"No item named {searched_name} found.")
+from exceptions.game_exception import GameException
+
+
+class NoItemFoundException(GameException):
+    def __init__(self, searched_name):
+        self.message = f"No item named \"{searched_name}\" found."

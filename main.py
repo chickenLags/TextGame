@@ -1,5 +1,6 @@
 from Character import Character
 from Action import Action, Instance
+from exceptions.game_exception import GameException
 from items.weapon import Weapon
 from locations.Location import *
 
@@ -39,27 +40,30 @@ def getAction(string):
         return command, ""
 
 
-def gameEntry():
+def game_entry():
     while game.playing:
         game.running = True
         game.printMessages(game.getCurrentInstance().entryMessages)
         while game.running:
-            game.printMessages(game.getCurrentInstance().loopEntryMessages)
-            action, argument = getAction(game.getCurrentInstance().inputMessage)
-            if game.getCurrentInstance().containsAction(action):
-                retrievedAction = game.getCurrentInstance().containsAction(action)
-                game.printMessages(retrievedAction.entryMessages)
-                retrievedAction.compute(argument)
-                game.printMessages(retrievedAction.endMessages)
-                game.printMessages(game.getCurrentInstance().loopEndMessages)
-            elif game.getBaseActions(action):
-                retrievedAction = game.getBaseActions(action)
-                game.printMessages(retrievedAction.entryMessages)
-                retrievedAction.compute(argument)
-                game.printMessages(retrievedAction.endMessages)
-                game.printMessages(game.getCurrentInstance().loopEndMessages)
-            else:
-                game.printMessages(game.getCurrentInstance().elseMessages)
+            try:
+                game.printMessages(game.getCurrentInstance().loopEntryMessages)
+                action, argument = getAction(game.getCurrentInstance().inputMessage)
+                if game.getCurrentInstance().containsAction(action):
+                    retrievedAction = game.getCurrentInstance().containsAction(action)
+                    game.printMessages(retrievedAction.entryMessages)
+                    retrievedAction.compute(argument)
+                    game.printMessages(retrievedAction.endMessages)
+                    game.printMessages(game.getCurrentInstance().loopEndMessages)
+                elif game.getBaseActions(action):
+                    retrievedAction = game.getBaseActions(action)
+                    game.printMessages(retrievedAction.entryMessages)
+                    retrievedAction.compute(argument)
+                    game.printMessages(retrievedAction.endMessages)
+                    game.printMessages(game.getCurrentInstance().loopEndMessages)
+                else:
+                    game.printMessages(game.getCurrentInstance().elseMessages)
+            except GameException as e:
+                print(f"[ALERT] {e.message}\n")
 
 
 im = ItemManager()
@@ -67,24 +71,16 @@ character = Character()
 w1 = Weapon(im.get_material('Rusty'), im.get_weapon_type("Dagger"))
 character._force_equip(w1, silent=True)
 
-# Testing equiping weapon.
-# r1 = im.generateWeapon()
-# character.inventory.add(r1)
-# character.equip(r1.get_name()  )
-
-# testing inventory show.
-# print(character.equipment._equipment)
-# for type_ in ItemType:
-#     print(type_.name, character.equipment.getName(type_))
-
 
 game = Instance(im, character)
 game.gotoInstance(LocationForest(game, character, Action))
-gameEntry()
+game_entry()
+
 
 
 '''
 @Todos:
+catch Inventory errors to prevent game from crashing?
 should change comparator from equipable to item?
 merge equipable and EquipType
 expand ItemType to include Misc items.
@@ -135,5 +131,8 @@ was making the sql tables and making modifations in the items.py file: refactori
 
 multiple enemy fights
 
+add second screen for inventory
+ - terminal seems impossible, however I could do a window screen with pygame.
+ - pyglet?
 
 '''
