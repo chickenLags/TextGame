@@ -23,8 +23,14 @@ class Action:
         self.endMessages = endMessages
 
     def compute(self, argument):
+        # @Todo
+        # an argument at this point can contain more spaces. originally "go village potato" would
+        # become here "village potato". perhaps a "attack enemy1 fire" or other combinations
+        # would be cool to catch? perhaps recursive actions are possible? allowing for complex
+        # commands to be given?
         for func in self.computations:
-            if len( signature( func ).parameters ) == 1:        ## should take into account other parameters...
+            if len( signature( func ).parameters ) == 1:  # should take into account other
+                # parameters...
                 func(argument)
 
             else:

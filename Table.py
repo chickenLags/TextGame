@@ -1,8 +1,10 @@
 import math
+from typing import Optional
+
 
 class Table:
 
-    def __init__(self, rows, title="No Title"):
+    def __init__(self, rows, title: Optional[str] = None):
         self.title = title
         self.rows = rows
 
@@ -57,10 +59,10 @@ class Table:
 
     def print(self):
         if (len(self.rows) < 1):
-            print("table '" + self.title.capitalize() + "' has no content")
-            return
-        
-        self.print_title()
+            return print("table has no content")
+
+        if self.title:
+            self.print_title()
         print(self.table)
 
     def print_title(self):

@@ -6,3 +6,8 @@ from dataclasses import dataclass
 @dataclass
 class GameException(Exception):
     message: str
+    silent: bool = False
+
+
+class SilentException(Exception):
+    pass

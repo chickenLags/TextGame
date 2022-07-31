@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b9aba1f5-8f09-49e0-911e-cc7cc5a3aaff" name="Changes" comment="moved gameloop to instance">
-      <change afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
+    <list default="true" id="b9aba1f5-8f09-49e0-911e-cc7cc5a3aaff" name="Changes" comment="renamed instance to game&#10;moved game to own file">
+      <change afterPath="$PROJECT_DIR$/exceptions/action_exception.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exceptions/not_found_exceptions.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Action.py" beforeDir="false" afterPath="$PROJECT_DIR$/Action.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Table.py" beforeDir="false" afterPath="$PROJECT_DIR$/Table.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exceptions/game_exception.py" beforeDir="false" afterPath="$PROJECT_DIR$/exceptions/game_exception.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/locations/Location.py" beforeDir="false" afterPath="$PROJECT_DIR$/locations/Location.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/locations/location_base.py" beforeDir="false" afterPath="$PROJECT_DIR$/locations/location_base.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +99,14 @@
       <option name="project" value="LOCAL" />
       <updated>1659295620347</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="renamed instance to game&#10;moved game to own file">
+      <created>1659295902666</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1659295902666</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -118,6 +129,7 @@
     <MESSAGE value="moved equipable and weapon to own files.&#10;added comparator for equipable's&#10;added NoEquipmentFoundException&#10;added NoItemFoundException&#10;added inventory unit test" />
     <MESSAGE value="added GameException for exceptions that should not kill the game" />
     <MESSAGE value="moved gameloop to instance" />
-    <option name="LAST_COMMIT_MESSAGE" value="moved gameloop to instance" />
+    <MESSAGE value="renamed instance to game&#10;moved game to own file" />
+    <option name="LAST_COMMIT_MESSAGE" value="renamed instance to game&#10;moved game to own file" />
   </component>
 </project>

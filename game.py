@@ -1,5 +1,8 @@
 from Action import Action
-from exceptions.game_exception import GameException
+from Table import Table
+from exceptions.action_exception import ActionException
+from exceptions.game_exception import GameException, SilentException
+from exceptions.not_found_exceptions import AreaNotFoundException
 from locations.location_base import LocationBase, TopLevelLocation
 from locations.location_inventory import LocationInventory
 
@@ -15,15 +18,21 @@ class Game:
 
         lookFunction = lambda: self.printMessages(self.getCurrentInstance().description)
         gotoInventory = lambda: self.gotoInstance(LocationInventory(self, character))
-        self.baseActions.append(Action("Actions", Action.actions, ["==== available actions ====:"], [self.displayActions, self.gotoHorizontalInstance], []))
-        self.baseActions.append(Action("DisplayInstanceTrree", ["DisplayInstanceThree", "d"], ["==== available something ====:"], [self.displayInstances], []))
+        self.baseActions.append(Action(
+            "Actions", Action.actions, ["==== available actions ====:"],
+            [self.displayActions, self.gotoHorizontalInstance], [])
+        )
+        self.baseActions.append(Action(
+            "Display instance stack", ["display", "stack", "d"],
+            ["==== available instances ====:"], [self.displayInstances],
+            [])
+        )
         self.baseActions.append(Action("Stats", Action.stats, [], [character.display_stats], []))
         self.baseActions.append(Action("Inventory", Action.inventory, [], [gotoInventory], [""]))
         self.baseActions.append(Action("Look around", Action.look, [], [lookFunction], []))
 
     def displayInstances(self):
-        for i in self.instances:
-            print(i.name)
+        Table([[i.name] for i in self.instances]).print()
 
     def displayActions(self):
         actionNames = []
@@ -40,10 +49,10 @@ class Game:
     def getParentInstance(self):
         return self.instances[-1]
 
-    def printMessages(self, parameters):    ## should check whether parameter exist.
+    def printMessages(self, parameters):
         for p in parameters:
-            if hasattr(p, '__call__'):      ### If parameter required then it will be added. no logical situation
-                print( str( p() ) )         ### for another argument than given parameter.
+            if hasattr(p, '__call__'):
+                print( str( p() ) )
             else:
                 print( str( p ) )
 
@@ -66,23 +75,31 @@ class Game:
             self.instances.pop()
         self.instances.append(other)
 
-    def getBaseActions(self, action):
-        for a in self.baseActions:
-            if action in a.synonims:
-                return a
-        return False
+    def find_action(self, search):
+        actions = self.getCurrentInstance().actions + self.baseActions
+        action = [a for a in actions if search in a.synonims]
+
+        if not action: raise ActionException()
+
+        return action[0]
+
+    def connected_areas(self):
+        return self.getCurrentInstance().connectedAreas
 
     def gotoHorizontalInstance(self, argument):
-        if argument:
-            for c in self.getCurrentInstance().connectedAreas:
-                if argument in c.synonims:
-                    self.gotoInstance(c(self, LocationBase.character))
-        else:
-            print("\n==== Bordering Area's ====:")
-            [print(str(loc.__name__[8:])) for loc in self.getCurrentInstance().connectedAreas]
+        if not argument:
+            # would be cool to have a description next to the name, but it is not yet initialized.
+            areas = [[l.__name__[8:]] for l in self.connected_areas()]
+            return Table(areas, "\nBordering Area's").print()
 
-    def getAction(self, string):
-        command = input(string + "\n\n => ")
+        area = [area for area in self.connected_areas() if argument in area.synonims]
+
+        if not area: raise AreaNotFoundException()
+
+        self.gotoInstance(area[0](self, LocationBase.character))
+
+    def get_user_input(self, string):
+        command = input(string + "\n\n    => ")
         print("")
         if command.count(" ") > 0:
             action, argument = command.split(" ", 1)
@@ -95,24 +112,25 @@ class Game:
         while self.playing:
             self.running = True
             self.printMessages(self.getCurrentInstance().entryMessages)
+
             while self.running:
                 try:
-                    self.printMessages(self.getCurrentInstance().loopEntryMessages)
-                    action, argument = self.getAction(self.getCurrentInstance().inputMessage)
-                    if self.getCurrentInstance().containsAction(action):
-                        retrievedAction = self.getCurrentInstance().containsAction(action)
-                        self.printMessages(retrievedAction.entryMessages)
-                        retrievedAction.compute(argument)
-                        self.printMessages(retrievedAction.endMessages)
-                        self.printMessages(self.getCurrentInstance().loopEndMessages)
-                    elif self.getBaseActions(action):
-                        retrievedAction = self.getBaseActions(action)
-                        self.printMessages(retrievedAction.entryMessages)
-                        retrievedAction.compute(argument)
-                        self.printMessages(retrievedAction.endMessages)
-                        self.printMessages(self.getCurrentInstance().loopEndMessages)
-                    else:
-                        self.printMessages(self.getCurrentInstance().elseMessages)
+                    self.execute_action()
                 except GameException as e:
                     print(f"[ALERT] {e.message}\n")
+                except SilentException as e:
+                    pass
 
+    def execute_action(self):
+        self.printMessages(self.getCurrentInstance().loopEntryMessages)
+
+        search_action, argument = self.get_user_input(self.getCurrentInstance().inputMessage)
+        action = self.find_action(search_action)
+
+        if not action:
+            return self.printMessages(self.getCurrentInstance().elseMessages)
+
+        self.printMessages(action.entryMessages)
+        action.compute(argument)
+        self.printMessages(action.endMessages)
+        self.printMessages(self.getCurrentInstance().loopEndMessages)

@@ -1,13 +1,7 @@
 
-from Enemy import Enemy
-#from Action import Action
-import random
 
 from locations.location_base import LocationBase, TopLevelLocation
 from locations.location_combat import LocationCombatInstance
-# from locations.location_dark_forest import LocationDarkForest
-# from locations.location_forest import LocationForest
-# from locations.location_village import LocationVillage
 
 
 class World:
@@ -26,20 +20,6 @@ class Province:
 class Area:
     def __init__(self):
         self.locations = []
-
-# world = World()
-# state = State()
-# province = Province()
-# area = Area()
-#
-# world.states.append(state)
-# state.provinces.append(province)
-# province.areas.append(area)
-# area.locations = [
-#     LocationForest,
-#     LocationDarkForest,
-#     LocationVillage
-# ]
 
 
 class LocationForest(TopLevelLocation):
@@ -108,55 +88,4 @@ class LocationVillage(TopLevelLocation):
         lookFunction = lambda : instance.printMessages(self.description)
         self.actions.append( LocationBase.Action ("Look around", LocationBase.Action.look, [], [lookFunction], []))
 
-
-
-
-# class Location:
-#     name = "Dark Forest"
-#
-#     # properties of location:
-#     # name, what monsters, level range
-#     # option for future additions.
-#
-#     properties = {"Default":
-#                       {"monstertypes":["Goblins", "Ogres", "Dragons"],
-#                        "levelRange": [1, 100]},
-#                   "Forest":
-#                       {"monstertypes": ["Goblins"],
-#                        "levelRange": [10, 20]},
-#                   "Dark Forest":
-#                       {"monstertypes": ["Goblins"],
-#                        "levelRange": [1, 2]}
-#                   }
-#
-#     def getMonster(self, random):
-#         monsterType = self.properties[self.name]['monstertypes'][random.randrange(0, len(self.properties[self.name]["monstertypes"]))]
-#         return monsterType
-#
-#     def getLevelRange(self):
-#         return self.properties[self.name]["levelRange"]
-
-
-# name, synonims, entryMessages, computations, endMessages
-
-
-# class Option:
-#     def __init__(self, percentage, action):
-#         self.percentage = percentage
-#         self.action = action
-#
-# class BaseChance:
-#     def __init__(self):
-#         self.options = []
-#
-#
-# class EitherChance(BaseChance):
-#     def __init__(self, options, elseOption):
-#         for option in options:
-#             self.options.append(option)
-#         self.elseOption = elseOption
-#
-#
-# class AnyChance(BaseChance):
-#     pass
 
