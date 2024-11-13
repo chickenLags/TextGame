@@ -5,6 +5,7 @@ from Enemy import Enemy
 from Inventory import Inventory
 from Equipment import Equipment
 from Table import Table
+from items.Item import Item
 from items.equip_type import EquipType
 from items.equipable import Equipable
 from items.item_type import ItemType
@@ -23,13 +24,18 @@ class Character:
         if not self.inventory.find(equipment_name):
             return print ("can't equip this item")
 
-        to_equip = self.inventory.pop(equipment_name)
+        to_equip = self.take(equipment_name)
         unequiped = self.equipment.unequip(to_equip.equipType.type)
 
         if unequiped:
-            self.inventory.add(unequiped)
+            self.give(unequiped)
         self.equipment.equip(to_equip)
 
+    def give(self, item: Item):
+        self.give(item)
+
+    def take(self, item: Item):
+        self.inventory.pop(item)
 
     def display_inventory(self):
         self.inventory.display()

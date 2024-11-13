@@ -42,7 +42,8 @@ class Enemy:
             print("The " + self.name + " falls down and makes it last wail before it dies")
             character.experience_gain(self.get_experience())
             if random.randint(0, 100) < 20:
-                character.inventory.add(instance.itemManager.generateWeapon())
+                weapon = instance.itemManager.generateWeapon()
+                character.give(weapon)
             instance.leaveInstance()
         else:
             character.attack(self)
