@@ -7,9 +7,6 @@ from locations.Location import *
 from items.item_manager import ItemManager
 
 
-def RNG_under_ten(lower_value = 1, higher_value = 10):
-    return random.randint(lower_value, higher_value)
-
 def leaving_game():
     game_choice = input(
         "Do you wish to leave the forrest behind and live a safe life from now on? (Yes/No)\n"

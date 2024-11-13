@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="b9aba1f5-8f09-49e0-911e-cc7cc5a3aaff" name="Changes" comment="renamed instance to game&#10;moved game to own file">
-      <change afterPath="$PROJECT_DIR$/exceptions/action_exception.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exceptions/not_found_exceptions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/TextGame.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/TextGame.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Action.py" beforeDir="false" afterPath="$PROJECT_DIR$/Action.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Table.py" beforeDir="false" afterPath="$PROJECT_DIR$/Table.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exceptions/game_exception.py" beforeDir="false" afterPath="$PROJECT_DIR$/exceptions/game_exception.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/locations/Location.py" beforeDir="false" afterPath="$PROJECT_DIR$/locations/Location.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/locations/location_base.py" beforeDir="false" afterPath="$PROJECT_DIR$/locations/location_base.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,18 +32,29 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2CdneBPKeFevR4bBn4z0vmVkr7y" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
-    <property name="vue.rearranger.settings.migration" value="true" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.Run Game.executor": "Run",
+    "Python.main.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "/Users/roy/development/TextGame",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Roy\Development\TextGame\exceptions" />
@@ -53,6 +62,40 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Roy\Development\TextGame\tests\unit" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Run Game" type="PythonConfigurationType" factoryName="Python">
+      <module name="TextGame" />
+      <selectedOptions>
+        <option name="environmentVariables" visible="false" />
+        <option name="envPaths" visible="false" />
+      </selectedOptions>
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PY-242.23726.102" />
+        <option value="bundled-python-sdk-5e1850174b45-399fe30bd8c1-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.23726.102" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -63,6 +106,8 @@
       <option name="presentableId" value="Default" />
       <updated>1659141423269</updated>
       <workItem from="1659261714961" duration="764000" />
+      <workItem from="1731510139022" duration="494000" />
+      <workItem from="1731510643836" duration="96000" />
     </task>
     <task id="LOCAL-00001" summary="refactor in moving files a folder lower + some small fixes">
       <created>1659263251805</created>
@@ -131,5 +176,9 @@
     <MESSAGE value="moved gameloop to instance" />
     <MESSAGE value="renamed instance to game&#10;moved game to own file" />
     <option name="LAST_COMMIT_MESSAGE" value="renamed instance to game&#10;moved game to own file" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/TextGame$Run_Game.coverage" NAME="Run Game Coverage Results" MODIFIED="1731510739122" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/TextGame$main.coverage" NAME="main Coverage Results" MODIFIED="1731510199680" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
