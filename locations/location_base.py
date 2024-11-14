@@ -1,5 +1,6 @@
 from random import randint
 
+from Action import Action
 from exceptions.action_exception import ActionException
 
 
@@ -33,8 +34,22 @@ class TopLevelLocation(LocationBase):
         super(TopLevelLocation, self).__init__(instance, character)
 
         self.actions.append(
-            LocationBase.Action(
-                "Leave", LocationBase.Action.leave, ["leaving game"],
-                [exit], [""])
+            Action(
+                "Leave",
+                Action.leave,
+                ["leaving game"],
+                [self.leave_game],
+                [""])
         )
 
+    def leave_game(self):
+        game_choice = input(
+            "Do you wish to leave the forrest behind and live a safe life from now on? (Yes/No)\n"
+        )
+        if game_choice in ['yes', 'y']:
+            print('You Turn around start walking leaving this hellhole behind, \n'
+                  'however, you can\'t help but look over your shoulder once more wondering what '
+                  'would happen if you had stayed...')
+            exit()
+        elif game_choice in ['no', 'n']:
+            print("You find new determination and head back to the forest!")

@@ -7,26 +7,6 @@ from locations.Location import *
 from items.item_manager import ItemManager
 
 
-def leaving_game():
-    game_choice = input(
-        "Do you wish to leave the forrest behind and live a safe life from now on? (Yes/No)\n"
-    )
-    escaping = True
-    while escaping:
-        if game_choice == "yes" or game_choice == "y":
-            game = False
-            print('You Turn around start walking leaving this hellhole behind, \n'
-                  'however, you can\'t help but look over your shoulder once more wondering what '
-                  'would happen if you had stayed...')
-            return game
-        elif game_choice == "no" or game_choice == "n":
-            game = True
-            print("You find new determination and head back to the forest!")
-            return game
-        else:
-            game_choice = input("What? Do you or don't you? (yes/No)\n")
-
-
 im = ItemManager()
 character = Character()
 w1 = Weapon(im.get_material('Rusty'), im.get_weapon_type("Dagger"))

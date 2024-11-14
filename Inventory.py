@@ -39,7 +39,7 @@ class Inventory:
     def get_misc_items(self):
         return [
             item for item in self.inventory
-            if not isinstance(item, Equipable) and not isinstance(item, Weapon)
+            if not isinstance(item, Equipable)
         ]
 
     def find(self, name: string):

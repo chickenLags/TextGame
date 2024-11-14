@@ -59,10 +59,6 @@ class Game:
     def inputMessage(self):
         return self.inputMessage
 
-    def leaveGame(self):
-        self.running = False
-        self.playing = False
-
     def leaveInstance(self):
         self.instances.pop()
         self.running = False
