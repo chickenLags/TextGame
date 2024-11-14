@@ -28,7 +28,7 @@ class Equipment:
         self._equipment[equipment.equipType.type] = equipment
 
         if not silent:
-            print("Equiped the " + equipment.get_name().lower() + "!")
+            print("[E] Equiped the " + equipment.get_name().lower() + "!")
 
     def erode(self, item_type: ItemType):
         # @Todo: move erosion to the usage function of the equiable: weapon.attack or armour.defend

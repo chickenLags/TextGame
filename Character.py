@@ -32,10 +32,10 @@ class Character:
         self.equipment.equip(to_equip)
 
     def give(self, item: Item):
-        self.give(item)
+        self.inventory.add(item)
 
     def take(self, item: Item):
-        self.inventory.pop(item)
+        return self.inventory.pop(item, None)
 
     def display_inventory(self):
         self.inventory.display()

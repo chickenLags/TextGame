@@ -54,11 +54,10 @@ class Inventory:
         self.inventory.append(item)
         print("[I] You put the " + item.get_name().lower() + " in the inventory.")
 
-    def pop(self, itemName: string) -> Equipable:
-        value = None
+    def pop(self, itemName: string, default_value=None) -> Equipable:
         for item in self.inventory:
             if item.get_name().lower() == itemName.lower():
-                value = self.inventory.pop(self.inventory.index(item))
+                default_value = self.inventory.pop(self.inventory.index(item))
 
-        return value
+        return default_value
 

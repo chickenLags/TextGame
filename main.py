@@ -10,7 +10,9 @@ from items.item_manager import ItemManager
 im = ItemManager()
 character = Character()
 w1 = Weapon(im.get_material('Rusty'), im.get_weapon_type("Dagger"))
+w2 = Weapon(im.get_material('Rusty'), im.get_weapon_type("Sword"))
 character._force_equip(w1, silent=True)
+character.give(w2)
 
 
 game = Game(im, character)
